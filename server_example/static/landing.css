@@ -1,0 +1,77 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500&display=swap');
+
+*{
+    font-family: 'Baloo Thambi 2', cursive;
+    outline: 0;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;  
+    
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background: url(./imagens/img.jpg);
+}
+
+#fundo-externo {
+    overflow: hidden;
+    position: relative; 
+    
+}
+
+#fundo {
+    margin: 0 auto;
+    padding: 0 4%;
+}
+
+.content-center{
+    background-color: #262626a4;
+    max-width: 400px !important;
+    margin: 80px auto;
+    padding: 40px 2%;
+
+}
+
+.content-center .btn{
+    color: #fff;
+    background-color: #262626a4;
+    cursor: pointer;
+    border: 2px solid #fff;
+    margin-top: 20px;
+    padding: 10px 60px;
+    font-weight: 400;
+    font-size: 18px;
+    text-transform: uppercase;
+    transition: linear .3s;
+}
+
+.content-center .btn:hover{
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #fff;
+}
+
+.content-center .logo{
+    background: url(./imagens/logo.png);
+    background-size: 60% 60%;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100px;
+}
+
+.content-center input{
+    padding: 10px 5px;
+    width: 60%;
+    border: 1px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    padding: .75rem 1rem;
+    border-radius: 4px;
+}
+
+.content-center {
+    text-align: center;
+}

@@ -1,0 +1,59 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MediRTC</title>
+
+    <link rel="stylesheet" type="text/css" href="css/demo_audio_video_simple.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/prettify/prettify.js"></script>
+    <script type="text/javascript" src="js/prettify/loadAndFilter.js"></script>
+    <script type="text/javascript" src="js/prettify/jquery.min.js"></script>
+    <!--show-->
+    <!-- Assumes global locations for socket.io.js and easyrtc.js -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="../easyrtc/easyrtc.js"></script>
+    <script type="text/javascript" src="js/demo_audio_video_simple.js"></script>
+    <script src="js/page.js"></script> 
+
+
+</head>
+<body onload="connect();">
+    <div id="fundo-externo">
+        <div id="fundo">
+            <section>
+                    <!--hide-->
+                <div id="container">
+                        <div id="main">
+                            <!-- Main Content -->
+                        
+                            <!--show-->
+                            <div id="demoContainer">
+                                <div id="connectControls">
+                                
+                                    <div id="btn-hide">
+                                    </div> 
+                                    
+                                    <div id="procura">
+                                    </div>     
+                    <div id="iam"></div>
+                    </div>
+                    <br />
+                    <strong></strong>
+                    <div id="otherClients"></div>
+                </div>
+                <div class="content-center" id="videos">
+                  <video autoplay="autoplay" playsinline="playsinline" id="callerVideo"></video>
+                    <video autoplay="autoplay" playsinline="playsinline" class="easyrtcMirror" id="selfVideo" muted="muted" volume="0" ></video>
+                  </div>
+                    <!-- each caller video needs to be in it's own div so it's close button can be positioned correctly -->
+                </div>
+            </div>
+        </section>
+    </div>
+  </div>
+</body>
+</html>
