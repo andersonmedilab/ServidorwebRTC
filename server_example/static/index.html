@@ -1,45 +1,64 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+	<meta name="description" content="Webmaster">
+	<meta name="keywords" content="servidorwebrtc,webrtc,rtc,medilabsistemas,medilab,medirtc">
+	<meta name="author" content="Tiago, Bernardo, Anderson, Rodrigo">
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="imagens/icon.png" />
+    <link rel="stylesheet" href="landing.css">
     <title>Login MediRTC</title>
-
-
-    <link rel="stylesheet" type="text/css" href="landing.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
-    <script src="./lobby.js"></script>
-    <script src="./fundo.js"></script>
 </head>
 <body>
     <div id="fundo-externo">
         <div id="fundo">
             <section class="content-center">
-                <div id="container">
-                    <div id="main">
-                    <tr>
-                        <div class="logo"></div>
-                            <form name="formulario" method ="get" action="./demos/MediRTC.html">
-                             <div>
-                                <input type="text" Name ="Medico" id="Medico" placeholder="Nome do médico" required>
-                                <input type="text" Name ="Paciente" id="Paciente" placeholder="Nome do paciente" required>
-                                <input type="text" Name ="crm" id="crm" placeholder="Número do CRM" required>
-                            </div>                
-                        <div>
-                    <input class="btn" value ="Enviar"type="submit" />
-                </div>                
-            </form>
-        <br>
-    </tr>
-</div>
-</table>
-</table>
-
-</div>
-</section>
-</div>
-</div>
+                <div class="logo"></div><!--logo-->
+                <div id = "form-login" action = "./demos/MediRTC.html" method>
+                <input type="text" id = "NOMEMEDICO" placeholder="Nome do médico"></input>
+                <input type="text" id = "NOMEPACIENTE" placeholder="Nome do paciente"></input>
+                <input type="text" id = "CRM" placeholder="CRM do médico"></input>
+                <button class="btn" onclick="funcaoParaExecutar()" id="btn">criar sala</button>
+            </div><!--form-->
+        </section><!--content-center-->
+    </div><!--fundo-->
+</div><!--fundo-externo-->
 </body>
+<script>
+    now = new Date;
+    var ano;
+    var mes;
+    var dia;
+    var hora;
+    var min;
+
+    var dia = now.getDate();
+    var mes = now.getMonth();
+    var ano = now.getYear();
+    var hora = now.getHours();
+    var min = now.getMinutes();
+
+    function funcaoParaExecutar() {
+
+        let nMedico = document.querySelector("#NOMEMEDICO").value;
+        let nPaciente = document.querySelector("#NOMEPACIENTE").value;
+        let crmMedico = document.querySelector("#CRM").value;
+        let json = {
+            nMedico,
+            nPaciente,
+            crmMedico
+        };
+
+        if (!json.nMedico){
+            alert("O nome do médico deve ser preenchido");
+        } else if(!json.nPaciente){
+            alert("O nome do paciente deve ser preenchido");
+        } else if(!json.crmMedico){
+            alert("O crm deve ser preenchido");
+        } else {
+            window.location.href = "./demos/MediRTC.html" +  "?NOMEMEDICO="+nMedico+"&NOMEPACIENTE="+nPaciente+"&CRM="+crmMedico+"&DATA=" + now.toISOString();
+        }
+    }</script>
 </html>

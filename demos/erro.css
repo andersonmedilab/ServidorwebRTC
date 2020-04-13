@@ -10,29 +10,35 @@
 body, html{
     height: 100%;
     background-color: #004c84;
+    padding: 0 4%;
 }
 
 .container{
     display: flex;
     flex-direction: column;
-    max-width: 980px;
-    margin: 0 auto;
-    padding: 8% 2%;
+    justify-content: center;
+    align-items: center;
+    max-width: 1280px;  
 }
 
-.text {color: #fff;}
+h1, h2{
+    margin-top: 100px;
+    text-align: center;
+    color: #fff;
+}
 
 h1 {
     font-size: 27px;
     font-weight: bold; }
 
-h2 {font-size: 21px;}
+h2 {font-size: 21px;
+    margin-top: 20px;
+}
 
-h2 { margin-top: 20px;}
 
 button{
+    color: #fff;
     position: relative;
-    left: 28%;
     text-align: center;
     border: none;
     background-color: #004070;
@@ -48,5 +54,13 @@ button{
 button:hover{
     color: #004070;
     background-color: #fff;
+}
+
+@media (max-width: 765px){
+    button{
+        padding: 15px;
+        font-size: 13px;
+       
+    }
 }
 
