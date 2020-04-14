@@ -24,14 +24,51 @@ function connect() {
      console.log(validadorConexao)
      easyrtc.setUsername(validadorConexao);
      console.log(conexao);
+     console.log(easyrtc.haveVideoTrack())
+}
+var mutarVideo = false
+function muteVideo() {
+    updateVideoImage(mutarVideo);   
 }
 
-function muteActiveBox() {
-    updateMuteImage(true);
+function updateVideoImage(toggle) {
+    var ocultaVideo = document.getElementById("ocultaVideo");
+        if(!toggle){
+            easyrtc.enableCamera(toggle)
+            mutarVideo = true
+            ocultaVideo.innerHTML = '<i class="fas fa-video-slash"></i>'
+        } else {
+            easyrtc.enableCamera(toggle)
+            mutarVideo = false
+            ocultaVideo.innerHTML = '<i class="fas fa-video"></i>'
+        }
 }
 
-function updateMuteImage(toggle) {
-    //var muteButton = document.getElementById('muteButton');
+var mutarMeuAudio = false
+function muteMeuAudio() {
+    updateMicImage(mutarMeuAudio);   
+}
+
+function updateMicImage(toggle) {
+    var microphone = document.getElementById("microphone");
+    if(!toggle){
+        easyrtc.enableMicrophone(toggle)
+        mutarMeuAudio = true
+        microphone.innerHTML = '<i class="fas fa-microphone-alt-slash"></i>'
+    } else {
+        easyrtc.enableMicrophone(toggle)
+        mutarMeuAudio = false
+        microphone.innerHTML = '<i class="fas fa-microphone-alt"></i>'
+    }
+}
+
+function muteOutroAudio() {
+    updateFoneImage(true);
+}
+
+function updateFoneImage(toggle) {
+    var mic = document.getElementById("mic");
+    console.log(document.getElementById("mic"))
     //if( activeBox > 0) { // no kill button for self video
         //muteButton.style.display = "block";
         var videoObject = document.getElementById("callerVideo");
@@ -41,7 +78,7 @@ function updateMuteImage(toggle) {
             isMuted = !isMuted;
             videoObject.muted = isMuted;
         }
-        //muteButton.src = isMuted?"images/button_unmute.png":"images/button_mute.png";
+        mic.innerHTML = isMuted?'<i class="fas fa-volume-mute"></i>':'<i class="fas fa-volume-up"></i>';
 /*     }
     else {
         muteButton.style.display = "none";
@@ -131,7 +168,7 @@ function loginSuccess(easyrtcid) {
         console.log(horaFinal.toDateString(horaFinal))
         console.log(horaInicial.toDateString(horaInicial))
         console.log(intervalo)
-        if (convertMiliseconds(intervalo) < 2 && horaFinal.toDateString(horaFinal) === horaInicial.toDateString(horaInicial)){
+        if (convertMiliseconds(intervalo) < 30 && horaFinal.toDateString(horaFinal) === horaInicial.toDateString(horaInicial)){
             logar = true
         }else{
             logar = false
