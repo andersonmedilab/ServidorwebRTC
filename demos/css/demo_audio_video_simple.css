@@ -15,35 +15,35 @@ body, html{
     background: url(./imagens/img.jpg);
     background-size: cover;
     background-position: center center;
+    overflow: hidden;
 }
 
 #fundo-externo {
-    overflow: hidden;
     position: relative; 
-    
+
 }
 
 #fundo {
     margin: 0 auto;
-    padding: 0 4%;
 }
 
 .content-center{
-    max-width: 1280px !important;
-    margin: 10px auto;
+    display: inline-block;
     padding: 0 2%;
+    max-height: 100%;
+    width: 97%;
 
 }
 
 #callerVideo{
     width:80%;
-    height: 530px;    
+    height: 88vh;
     background-color: #000;
 }
 
 #selfVideo{
     width: 17%;
-    height: 200px;
+    height: 30vh;
     margin-left: 30px;
     background-color: #000;
 }
@@ -61,22 +61,27 @@ body, html{
     color: #fff;
     padding: 5px 15px;
     margin-left: 25px;
-    text-align: center;  
+    text-align: center;
     cursor: pointer;
     border:none;
 }
 
-.bttn:hover{
-    color: #000;
-}
+.bttn:hover{ color: #000 !important; }
 
-@media screen and (max-width: 1250px) {
+.call{ 
+    -moz-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg); 
+    transform: rotate(-135deg);
+    color: rgb(187, 9, 9) !important;}
 
-    #callerVideo{
+
+@media  (max-width: 1024px) {
+        #callerVideo{
         width:100%;
         height: 40vh;
     }
-    
+
     #selfVideo{
         margin-top: 20px;
         width: 100%;
@@ -84,16 +89,14 @@ body, html{
         margin-left: auto;
     }
     .box{ width: 100%; }
-}
 
-@media screen and (max-width: 1024px) {
     .content-center {
-        padding: 10px 2%;
+        padding: 10px 1%;
    }
    .bttn{ font-size: 19px; }
 }
 
-@media screen and (max-width: 765px) {
+@media  (max-width: 765px) {
 
-   .bttn{ margin-left: 7px; }
+    .bttn{ margin-left: 10px; }
 }
