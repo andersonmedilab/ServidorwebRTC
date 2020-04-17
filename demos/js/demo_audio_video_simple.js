@@ -4,6 +4,7 @@ var conexao = new Object();
 maxCALLERS = 2;
 
 function connect() {
+    //easyrtc.enableDebug(true);
     easyrtc.setVideoDims(640,480);
     easyrtc.setRoomOccupantListener(callEverybodyElse);
     easyrtc.easyApp("easyrtc.audioVideoSimple", "selfVideo", ["callerVideo"], loginSuccess, loginFailure);
@@ -11,20 +12,15 @@ function connect() {
 
      var chaveValor = parametrosUrl.toString().split(",");
 
-     console.log(chaveValor);
-
      conexao[chaveValor[0].substring(0, chaveValor[0].indexOf("="))] = chaveValor[0].substring(chaveValor[0].indexOf("=") + 1);
      conexao[chaveValor[1].substring(0, chaveValor[1].indexOf("="))] = chaveValor[1].substring(chaveValor[1].indexOf("=") + 1);
      conexao[chaveValor[2].substring(0, chaveValor[2].indexOf("="))] = chaveValor[2].substring(chaveValor[2].indexOf("=") + 1);
      conexao[chaveValor[3].substring(0, chaveValor[3].indexOf("="))] = chaveValor[3].substring(chaveValor[3].indexOf("=") + 1);
      conexao.NOMEPACIENTE = conexao.NOMEPACIENTE.replace(/%20/g, " ")
-     console.log(conexao.NOMEPACIENTE)
      validadorConexao = chaveValor[2].concat(chaveValor[3])
      validadorConexao = conexao.NOMEPACIENTE + chaveValor[2] + chaveValor[3]
-     console.log(validadorConexao)
      easyrtc.setUsername(validadorConexao);
-     console.log(conexao);
-     console.log(easyrtc.haveVideoTrack())
+
 }
 var mutarVideo = false
 function muteVideo() {
@@ -118,7 +114,7 @@ function callEverybodyElse(roomName, otherPeople) {
     easyrtc.setRoomOccupantListener(null); // so we're only called once.
     var list = [];
     var connectCount = 0;
-    console.log(roomName)
+
     for(var easyrtcid in otherPeople ) {
         if (validadorConexao.toString() === easyrtc.idToName(easyrtcid)){
             list.push(easyrtcid);
@@ -143,31 +139,23 @@ function callEverybodyElse(roomName, otherPeople) {
 function converteData(data){
     var temporario = data.split("DATA=")
     temporario[1] = new Date(temporario[1])
-    console.log(typeof temporario[1]);
     return temporario[1]
 }
 
 function loginSuccess(easyrtcid) {
     selfEasyrtcid = easyrtcid;
-    console.log(easyrtc)
-
     var logar = true;
     var cont = 0
     for(var tagConnection in easyrtc.roomData.default.clientList){
         if (validadorConexao.toString() === easyrtc.idToName(tagConnection)){
-            cont+=1
-            
+            cont+=1 
         }
+
         horaFinal = new Date()
-        console.log(horaFinal)
-        console.log(Date.parse(horaFinal))
         
         var horaInicial = converteData(easyrtc.idToName(tagConnection))
-        console.log(horaInicial)
         var intervalo = Date.parse(horaFinal) - Date.parse(horaInicial)
-        console.log(horaFinal.toDateString(horaFinal))
-        console.log(horaInicial.toDateString(horaInicial))
-        console.log(intervalo)
+  
         if (convertMiliseconds(intervalo) < 30 && horaFinal.toDateString(horaFinal) === horaInicial.toDateString(horaInicial)){
             logar = true
         }else{
@@ -186,5 +174,11 @@ function loginSuccess(easyrtcid) {
 }
 
 function loginFailure(errorCode, message) {
-    easyrtc.showError(errorCode, message);
+
+    if(errorCode.toString() && message.toString()){
+        alert("Você está sem transimitir vídeo, ou você não possui um dispositivo de vídeo ou alguma configuração do seu navegador não permite utilizar o mesmo")
+        easyrtc.enableVideo(false)
+        easyrtc.easyApp("easyrtc.audioVideoSimple", "selfVideo", ["callerVideo"], loginSuccess, loginFailure);
+    }
+    // easyrtc.showError(errorCode, message);
 }
