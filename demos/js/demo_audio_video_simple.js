@@ -175,11 +175,13 @@ function loginSuccess(easyrtcid) {
 
 function loginFailure(errorCode, message) {
 
-    if(errorCode.toString() && message.toString()){
-        alert("Você está sem transimitir vídeo, ou você não possui um dispositivo de vídeo ou alguma configuração do seu navegador não permite utilizar o mesmo")
+    if(message.toString() === "Failed to get access to local media. Error code was NotFoundError."){
+        console.log("Teste")
+        alert("Você está sem transmitir vídeo, ou você não possui um dispositivo de vídeo ou alguma configuração do seu navegador não permite utilizar o mesmo")
         easyrtc.enableVideo(false)
         easyrtc.enableVideoReceive(true);
         easyrtc.easyApp("easyrtc.audioVideoSimple", "selfVideo", ["callerVideo"], loginSuccess, loginFailure);
+        easyrtc.setVideoObjectSrc( document.getElementById("callerVideo"), "");
     }
-    // easyrtc.showError(errorCode, message);
+    easyrtc.showError(errorCode, message);
 }
