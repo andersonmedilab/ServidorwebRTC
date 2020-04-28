@@ -16,10 +16,15 @@ function connect() {
      conexao[chaveValor[1].substring(0, chaveValor[1].indexOf("="))] = chaveValor[1].substring(chaveValor[1].indexOf("=") + 1);
      conexao[chaveValor[2].substring(0, chaveValor[2].indexOf("="))] = chaveValor[2].substring(chaveValor[2].indexOf("=") + 1);
      conexao[chaveValor[3].substring(0, chaveValor[3].indexOf("="))] = chaveValor[3].substring(chaveValor[3].indexOf("=") + 1);
+     conexao[chaveValor[4].substring(0, chaveValor[4].indexOf("="))] = chaveValor[4].substring(chaveValor[4].indexOf("=") + 1);
      conexao.NOMEPACIENTE = conexao.NOMEPACIENTE.replace(/%20/g, " ")
      validadorConexao = chaveValor[2].concat(chaveValor[3])
-     validadorConexao = conexao.NOMEPACIENTE + chaveValor[2] + chaveValor[3]
+     validadorConexao = conexao.NOMEPACIENTE + conexao.CRM + chaveValor[3]
+     console.log(validadorConexao)
+     console.log(conexao.STATUS)
      easyrtc.setUsername(validadorConexao);
+     teste = new Date()
+     console.log(teste.toISOString())
 
 }
 var mutarVideo = false
@@ -82,7 +87,11 @@ function updateFoneImage(toggle) {
 }
 
 function sair(){
-    window.location.href = "sair.html";
+    if(conexao.STATUS == "Ok"){
+        window.location.href = "salaEsperaConsulta.html";
+    }else if(conexao.STATUS == "Confirmado"){
+        window.location.href = "sair.html";
+    } 
 }
 
 function convertMiliseconds(millisecondVal) {
@@ -137,8 +146,11 @@ function callEverybodyElse(roomName, otherPeople) {
 }
 
 function converteData(data){
+    console.log(data)
     var temporario = data.split("DATA=")
-    temporario[1] = new Date(temporario[1])
+    console.log(temporario)
+    temporario[1] = new Date(parseInt(temporario[1]))
+    console.log(temporario[1])
     return temporario[1]
 }
 
@@ -151,12 +163,13 @@ function loginSuccess(easyrtcid) {
             cont+=1 
         }
 
-        horaFinal = new Date()
+        horaEntrada = new Date()
         
-        var horaInicial = converteData(easyrtc.idToName(tagConnection))
-        var intervalo = Date.parse(horaFinal) - Date.parse(horaInicial)
+        var horaLimite = converteData(easyrtc.idToName(tagConnection))
+        console.log(horaLimite)
+        //var intervalo = Date.parse(horaFinal) - Date.parse(horaInicial)
   
-        if (convertMiliseconds(intervalo) < 30 && horaFinal.toDateString(horaFinal) === horaInicial.toDateString(horaInicial)){
+        if (Date.parse(horaEntrada) <= Date.parse(horaLimite)  && horaEntrada.toDateString(horaEntrada) === horaLimite.toDateString(horaLimite)){
             logar = true
         }else{
             logar = false
@@ -171,17 +184,28 @@ function loginSuccess(easyrtcid) {
         easyrtc.disconnect();
         window.location.href = "erro.html";
     }
+
+    if(conexao.STATUS != "Ok"){
+        if (conexao.STATUS === "Confirmado"){
+
+        } else {
+            easyrtc.disconnect();
+            window.location.href = "erro.html";
+        }
+    }
+   
 }
 
 function loginFailure(errorCode, message) {
 
     if(message.toString() === "Failed to get access to local media. Error code was NotFoundError."){
-        console.log("Teste")
         alert("Você está sem transmitir vídeo, ou você não possui um dispositivo de vídeo ou alguma configuração do seu navegador não permite utilizar o mesmo")
         easyrtc.enableVideo(false)
-        easyrtc.enableVideoReceive(true);
         easyrtc.easyApp("easyrtc.audioVideoSimple", "selfVideo", ["callerVideo"], loginSuccess, loginFailure);
-        easyrtc.setVideoObjectSrc( document.getElementById("callerVideo"), "");
     }
-    easyrtc.showError(errorCode, message);
+
+    if(message.toString() !== "Failed to get access to local media. Error code was NotFoundError."){
+        easyrtc.showError(errorCode, message);
+    }
+    
 }

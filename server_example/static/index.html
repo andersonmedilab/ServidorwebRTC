@@ -16,10 +16,11 @@
         <div id="fundo">
             <section class="content-center">
                 <div class="logo"></div><!--logo-->
-                <div id = "form-login" action = "./demos/MediRTC.html" method>
+                <div id = "form-login" action = "./medirtc/MediRTC.html" method>
                 <input type="text" id = "NOMEMEDICO" placeholder="Nome do médico"></input>
                 <input type="text" id = "NOMEPACIENTE" placeholder="Nome do paciente"></input>
                 <input type="text" id = "CRM" placeholder="CRM do médico"></input>
+                <input type="text" id = "STATUS" placeholder="STATUS"></input>
                 <button class="btn" onclick="funcaoParaExecutar()" id="btn">criar sala</button>
             </div><!--form-->
         </section><!--content-center-->
@@ -28,37 +29,40 @@
 </body>
 <script>
     now = new Date;
-    var ano;
-    var mes;
-    var dia;
-    var hora;
-    var min;
+    now = now
+    dataLimite = adicionarMinutos(now, 30)
 
-    var dia = now.getDate();
-    var mes = now.getMonth();
-    var ano = now.getYear();
-    var hora = now.getHours();
-    var min = now.getMinutes();
-
+/*     var horasMs = Date.parse(now) + 120000;
+    horasMs = horasMs.toString()
+    now = now.toISOString()
+    now = now.substring(0, now.indexOf('T') + 1)
+    now = now + horasMs */
+    function adicionarMinutos(data, minutos) {
+     return new Date(data.getTime() + minutos * 60000).getTime();
+    }
     function funcaoParaExecutar() {
 
         let nMedico = document.querySelector("#NOMEMEDICO").value;
         let nPaciente = document.querySelector("#NOMEPACIENTE").value;
         let crmMedico = document.querySelector("#CRM").value;
+        let status = document.querySelector("#STATUS").value;
         let json = {
             nMedico,
             nPaciente,
-            crmMedico
+            crmMedico,
+            status
         };
 
         if (!json.nMedico){
             alert("O nome do médico deve ser preenchido");
-        } else if(!json.nPaciente){
+        } else if(!json.nPaciente){ 
             alert("O nome do paciente deve ser preenchido");
         } else if(!json.crmMedico){
             alert("O crm deve ser preenchido");
+        } else if(!json.status){
+            alert("O status deve ser preenchido");
         } else {
-            window.location.href = "./demos/MediRTC.html" +  "?NOMEMEDICO="+nMedico+"&NOMEPACIENTE="+nPaciente+"&CRM="+crmMedico+"&DATA=" + now.toISOString();
+            window.location.href = "./medirtc/MediRTC.html" +  "?NOMEMEDICO="+nMedico+"&NOMEPACIENTE="+nPaciente+"&CRM="+crmMedico+"&DATA=" + dataLimite + "&STATUS="+status;
         }
     }</script>
 </html>

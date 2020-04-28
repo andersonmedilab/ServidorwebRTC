@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="./salaEsperaConsulta.css"><!--mudar-->
+    <title>Sala de espera</title>
+</head>
+<body>
+    <div class="container">
+        <div class = "box">
+        <p id="texto">Por favor, aguarde a sua consulta.</p><!--Link:""-->
+        <p>Sua posição é: </p>
+        <button id="btn-sair" onclick="sairConsultaComOS()">Cancelar consulta</button>       
+        <!--botao de sair não querendo mais atendimento enviando dados para o atendente enviando a os -->
+        <div id = "fila"></div>
+        </div>
+    </div><!--container-->
+</body>
+<script>
+    var sairComOS = "Cancelando consulta pós confirmação"
+    var link = "";
+    function sairConsultaComOS(){
+
+        window.location.href = "sair.html";
+    }
+    let json = {
+        link,
+        sairComOS
+    };
+    if(json.link){
+        $.ajax({
+                type: 'POST',
+                        url: 'link',
+                        dataType: 'JSON',
+                        data: {'link':link},
+                        success: function (resposta) {
+                            if (resposta.link != "") {
+                                //setTimeout
+                                window.location.href = link;
+                                
+                            } else {
+                                
+                            }
+                            texto();
+                        },
+                error: function (resposta) {
+                console.log(resposta)
+                },
+                        complete: function () {
+                        // ao final da requisição...
+                        }
+        });
+    }
+
+    function texto(){
+        var x = document.querySelector("#link0")
+        if(link != ""){
+            x.innerHTML = "Sua vez chegou! Redirecionando para a sua consulta";
+        }
+    }
+
+    
+</script>
+</html>

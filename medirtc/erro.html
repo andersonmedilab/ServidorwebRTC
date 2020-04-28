@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="erro.css">
+    <title>Erro 404</title>
+</head>
+<body>
+    <div class="container">
+    <h1 class="text">A Página que você tentou se conectar ou está cheia ou não existe.</h1>
+    <h2 class="text">Entre em contato com o(a) atendente para criação de uma nova sala ou aguarde a sua consulta.</h2>
+    <div>
+        <h3>Se você ainda não se consultou e está na espera, clique em "Voltar para a fila", se já se consultou, clique em "Voltar para a tela inicial"</h1>
+            <div class="btn-box">
+        <button class="text btn" onclick="">Voltar para a fila</button>
+        <button class="text btn" onclick="funcaoParaExecutar()">Voltar para a tela inicial</button>
+    </div><!--btn-box-->
+    </div><!--container-->
+    </div><!--tela-->
+</body>
+<script>
+    function botaoespera(){
+        window.location.href= "salaEsperaConsulta.html";
+    }
+    function funcaoParaExecutar() {  
+        window.open('http://www.google.com.br');
+    }
+</script>
+</html>

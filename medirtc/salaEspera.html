@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de confirmação</title>
+    <link rel="stylesheet" type="text/css" href="./salaEspera.css"><!--mudar-->
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            <p id="texto">Confirmando sua consulta, aguarde por favor.</p><!--STATUS: OK-->
+            <div id = "Status"><!--corfimado--></div>
+            <!--Status de confirmação, idequip, idpaciente, data e hora
+                botao de sair não querendo mais atendimento-->
+    </div><!--box-->
+</div><!--container-->
+</body>
+<script>
+    var link = "";
+    var status
+    let json = {
+        status,
+        link
+    };
+    setInterval(function(){
+        $.ajax({
+                type: 'POST',
+                        url: 'Status',//mudar pro link do banco
+                        dataType: 'JSON',
+                        data: {'Status':status , 'Link':link},
+                        success: function (resposta) {
+                            if (resposta.data == "Confirmado") {
+                            window.location.href = "salaEsperaConsulta.html";
+                        } else if(resposta.data == "Ok" && link != ""){
+                            window.location.href = link;
+                        }
+                        texto();
+                        },
+                error: function (resposta) {
+                    console.log(resposta)
+                },
+                        complete: function () {
+                        // ao final da requisição...
+                        }
+        });
+    }, 3000);
+
+    function texto(){
+        var x = document.getElementById("texto");
+  
+        if(status === "Ok" && link != ""){
+            x.innerHTML ="Parece que o(a) atendente teve alguma dúvida quanto aos dados, você será direcionado(a) para uma pré-tele consulta."
+        } else if(status === "Confirmado"){
+            x.innerHTML = "Sua consulta foi confirmada, Você será direcionado(a) para a fila de espera para ser consultado em alguns instantes..."
+        }
+    }
+
+</script>
+</html>
