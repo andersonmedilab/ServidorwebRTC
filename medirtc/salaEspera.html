@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela de confirmação</title>
     <link rel="stylesheet" type="text/css" href="./salaEspera.css"><!--mudar-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="box">
             <p id="texto">Confirmando sua consulta, aguarde por favor.</p><!--STATUS: OK-->
+            <p id="posicao">Sua posição é: </p>
             <div id = "Status"><!--corfimado--></div>
             <!--Status de confirmação, idequip, idpaciente, data e hora
                 botao de sair não querendo mais atendimento-->
@@ -17,25 +19,46 @@
 </div><!--container-->
 </body>
 <script>
+    $( document ).ready(function() {
     var link = "";
     var status
+    var posicao = document.getElementById("posicao");
+    var token = localStorage.getItem("mediAgendaToken")
+    console.log(token)
     let json = {
         status,
         link
     };
-    setInterval(function(){
+    let stop = setInterval(function(){
+        const Url = 'http://localhost:8080/mediagenda_web/rest/teleAtendimento/getTeleAtendimentoPrimeiraFila'
         $.ajax({
                 type: 'POST',
-                        url: 'Status',//mudar pro link do banco
+                        url: Url,//mudar pro link do banco
                         dataType: 'JSON',
-                        data: {'Status':status , 'Link':link},
+                        headers:{
+                            'Authorization':'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNTA2OCIsImlzcyI6IkFORFJFQSBNRU5ERVMgRlJFSVRBUyAiLCJpYXQiOjE1ODgyODgwOTYsImV4cCI6MTkwMzgyMDg5Nn0._Nq73Vst9TRfYIvuwkdJby273ECsivkHnkhJ1AwtdHE',
+                            //'Authorization':'Bearer' + localStorage.getItem("mediAgendaToken"),
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'contentLanguage': 'pt-BR'
+                        },
+                        data: {'id_equip':'41','data':'04/05/2020','hora':'09:20:00'},
                         success: function (resposta) {
-                            if (resposta.data == "Confirmado") {
-                            window.location.href = "salaEsperaConsulta.html";
-                        } else if(resposta.data == "Ok" && link != ""){
-                            window.location.href = link;
-                        }
-                        texto();
+                            console.log(resposta)
+                            console.log(resposta.STATUS)
+                            console.log(resposta.URL)
+                            status = resposta.STATUS
+                            link = resposta.URL
+                            posicao.innerHTML = `Sua posição é: ${resposta.POSICAO}`
+                            texto();
+                            if (resposta.STATUS == "Conf") {
+                                setTimeout(function(){window.location.href = "salaEsperaConsulta.html";},60000)
+                                clearInterval(stop);           
+                            
+                            } else if(resposta.STATUS == "OK" && link != undefined){
+                                setTimeout(function(){window.location.href = link;},60000)
+                                clearInterval(stop); 
+                            }
+                        
                         },
                 error: function (resposta) {
                     console.log(resposta)
@@ -49,12 +72,13 @@
     function texto(){
         var x = document.getElementById("texto");
   
-        if(status === "Ok" && link != ""){
+        if(status === "OK" && link != undefined){
             x.innerHTML ="Parece que o(a) atendente teve alguma dúvida quanto aos dados, você será direcionado(a) para uma pré-tele consulta."
-        } else if(status === "Confirmado"){
+        } else if(status === "Conf"){
             x.innerHTML = "Sua consulta foi confirmada, Você será direcionado(a) para a fila de espera para ser consultado em alguns instantes..."
         }
     }
-
+    });
+   
 </script>
 </html>

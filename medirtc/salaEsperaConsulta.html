@@ -10,7 +10,7 @@
     <div class="container">
         <div class = "box">
         <p id="texto">Por favor, aguarde a sua consulta.</p><!--Link:""-->
-        <p>Sua posição é: </p>
+        <p id="posicao">Sua posição é: </p>
         <button id="btn-sair" onclick="sairConsultaComOS()">Cancelar consulta</button>       
         <!--botao de sair não querendo mais atendimento enviando dados para o atendente enviando a os -->
         <div id = "fila"></div>
@@ -18,31 +18,34 @@
     </div><!--container-->
 </body>
 <script>
+    $( document ).ready(function() {
     var sairComOS = "Cancelando consulta pós confirmação"
-    var link = "";
+    var posicao = document.getElementById("posicao");
     function sairConsultaComOS(){
-
         window.location.href = "sair.html";
     }
     let json = {
         link,
         sairComOS
     };
-    if(json.link){
+    let stop = setInterval(function(){
+        const Url = ''
         $.ajax({
                 type: 'POST',
-                        url: 'link',
+                        url: Url,
                         dataType: 'JSON',
                         data: {'link':link},
                         success: function (resposta) {
-                            if (resposta.link != "") {
-                                //setTimeout
-                                window.location.href = link;
-                                
+                            posicao.innerHTML = `Sua posição é: ${resposta.POSICAO}`
+                            if (resposta.URL != undefined) {
+                                var x = document.getElementById("texto")
+                                x.innerHTML = "Sua vez chegou! Redirecionando para a sua consulta";
+                                setTimeout(function(){window.location.href = resposta.URL;},60000)
+                                clearInterval(stop); 
                             } else {
                                 
                             }
-                            texto();
+            
                         },
                 error: function (resposta) {
                 console.log(resposta)
@@ -51,15 +54,9 @@
                         // ao final da requisição...
                         }
         });
-    }
+    },3000)
 
-    function texto(){
-        var x = document.querySelector("#link0")
-        if(link != ""){
-            x.innerHTML = "Sua vez chegou! Redirecionando para a sua consulta";
-        }
-    }
+    })
 
-    
 </script>
 </html>
