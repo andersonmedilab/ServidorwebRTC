@@ -20,17 +20,10 @@
 </div><!--container-->
 </body>
 <script>
-    var parametrosUrl;
     function sairConsulta(){
         window.location.href="http://localhost:8080/mediagenda_web/#/dashboard"
     }
     $( document ).ready(function() {
-
-/*     var conexao = new Object();
-    CapturaParametrosUrl()
-    var chaveValor = parametrosUrl.toString();
-    console.log(parametrosUrl.toString())
-    conexao[chaveValor[0].substring(0, chaveValor[0].indexOf("="))] = chaveValor[0].substring(chaveValor[0].indexOf("=") + 1); */
     var link = "";
     var status
     var posicao = document.getElementById("posicao");
@@ -62,7 +55,7 @@
                             posicao.innerHTML = `Sua posição é: ${resposta.POSICAO}`
                             texto();
                             if (resposta.STATUS == "Conf") {
-                                setTimeout(function(){window.location.href = "salaEsperaConsulta.html"+"?OS_EXAME="+resposta.OS_EXAME;},60000)
+                                setTimeout(function(){window.location.href = "salaEsperaConsulta.html";},60000)
                                 clearInterval(stop);           
                             
                             } else if(resposta.STATUS == "OK" && link != undefined){
@@ -114,25 +107,6 @@
         }
     }
     });
-
-/*     function CapturaParametrosUrl() {
-
-        //captura a url da página
-        var url = window.location.href; 
-
-        //tenta localizar o ?
-        var res = url.split('?'); 
-    
-        if (res[1] === undefined) {
-            alert('página sem parâmetros.');
-        }
-
-        if (res[1] !== undefined) {
-            //tenta localizar os & (pode haver mais de 1)
-            var parametros = res[1].split('&');
-            parametrosUrl = parametros;   
-        }
-} */
    
 </script>
 </html>

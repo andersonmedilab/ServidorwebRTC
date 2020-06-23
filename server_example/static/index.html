@@ -28,9 +28,9 @@
 </div><!--fundo-externo-->
 </body>
 <script>
-    now = new Date;
-    now = now
-    dataLimite = adicionarMinutos(now, 30)
+    let now = new Date;
+    let nowUTC = new Date(now.valueOf() - now.getTimezoneOffset() * 60000);
+    dataLimite = adicionarMinutos(nowUTC, 30)
 
 /*     var horasMs = Date.parse(now) + 120000;
     horasMs = horasMs.toString()

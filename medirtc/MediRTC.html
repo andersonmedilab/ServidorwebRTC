@@ -2,53 +2,100 @@
 <html lang="pt-br">
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-	<meta name="description" content="Webmaster">
-	<meta name="keywords" content="servidorwebrtc,webrtc,rtc,medilabsistemas,medilab,medirtc">
-	<meta name="author" content="Tiago, Bernardo, Anderson, Rodrigo">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="description" content="Webmaster">
+    <meta name="keywords" content="servidorwebrtc,webrtc,rtc,medilabsistemas,medilab,medirtc">
+    <meta name="author" content="Tiago, Bernardo, Anderson, Rodrigo">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>MediRTC</title>
-    <link rel="shortcut icon" href="./css/imagens/icon.png" />
-    <link rel="stylesheet" type="text/css" href="css/demo_audio_video_simple.css" />
+    <!---------------links-------------------->
+    <link rel="shortcut icon" href="imagens/icon.png" /><!--Mudar--apontamento-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!----------------scripts---------------------------------->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/prettify/prettify.js"></script>
     <script type="text/javascript" src="js/prettify/loadAndFilter.js"></script>
     <script type="text/javascript" src="js/prettify/jquery.min.js"></script>   
     <script src="/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="../easyrtc/easyrtc.js"></script>
+    <script type="text/javascript" src="../easyrtc/easyrtc_ft.js"></script>
     <script type="text/javascript" src="js/demo_audio_video_simple.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/demo_audio_video_simple.css" />
 </head>
-<body onload=" connect();">
-    <div id="fundo-externo">
-        <div id="fundo">            
-            <section>                
-                <div id="container">
-                    <div id="main">                    
-                        <div id="demoContainer">
-                            <div id="connectControls">                                
-                                <div id="btn-hide"></div><!--btn-hide-->                                     
-                                    <div id="procura"></div><!--procura-->     
-                                        <div id="iam"></div><!--main-->
-                                    </div><!--connectCOntrols-->
-                                <br/>
-                            <strong></strong>
-                        <div id="otherClients"></div><!--otherClients-->
-                    </div><!--demo-container-->
-                <div class="content-center" id="videos">
-                  <video autoplay="autoplay" playsinline="playsinline" id="callerVideo"></video>
-                    <video autoplay="autoplay" playsinline="playsinline" class="easyrtcMirror" id="selfVideo" muted="muted" volume="0" ></video>
-                    <div class="box">
-                        <button title="Microfone"id="microphone" class="bttn"onclick = "muteMeuAudio()"><i class="fas fa-microphone-alt"></i></button>
-                        <button title="Aúdio"id="mic" class="bttn"onclick = "muteOutroAudio()"><i class="fas fa-volume-up"></i></button>
-                        <button title="Vídeo"id="ocultaVideo" class="bttn"onclick = "muteVideo()"><i class="fas fa-video"></i></i></button>
-                        <!-- <button title="Chat" class="bttn"><i class="fas fa-comments"></i></i></button>--> 
-                        <button title="Sair" class="bttn call"onclick = "sair()"><i class="fas fa-phone"></i></button>
-                    </div><!--box-->                   
-                </div><!--videos-->                
-            </div><!--main-->
-        </section>
-    </div><!--fundo-->
-  </div><!--fundo-externo-->
+<body onload="connect();">
+ <!------------chat------------------>    
+    <div class="wrapper">
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo"></div>
+                    <button id="menu-click" class="close"><i class="fas fa-window-close"></i></button>               
+                </div> <!--sidebar-->  
+            <ul class="text-chat" id="conversation"></ul> 
+            <div class="campos">
+                <input class='input-text' autofocus id="menssagem" autocomplete="off" placeholder="Digite sua mensagem..." />
+                <label for="enviar_arquivo" class="enviar"><i class="i fa fa-paperclip"></i></label>
+                <input type="file" id="enviar_arquivo" onclick = 'vincularIdBotaoArq()'/>
+                <a id="link" download style="display: none">shouldnt be visible</a>
+                <label for="enviar_menssagem" class="enviar"><i class="i fas fa-paper-plane"></i></label>
+                <input type="submit" id="enviar_menssagem" class="enviar">
+            </div><!--campos-->  
+        </nav>
+ <!------------chat------------------>
+ <!------------video----------------->
+<div id="main">                    
+    <div id="demoContainer">
+        <div id="connectControls">                                
+            <div id="btn-hide"></div><!--btn-hide-->                                     
+                <div id="procura"></div><!--procura-->     
+                    <div id="iam"></div><!--main-->
+                        </div><!--connectCOntrols-->                        
+                            <div id="otherClients"></div><!--otherClients-->
+                        </div><!--demo-container-->          
+                    </div><!--main-->
+                <div id="content">         
+            <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="nav navbar-nav ml-auto">                            
+</ul>
+</div><!--collapse-->
+</div><!--container-fluid-->
+    <section id="videos" class="content-center">
+        <video autoplay="autoplay" playsinline="playsinline" id="callerVideo"></video>
+            <video autoplay="autoplay" playsinline="playsinline" class="easyrtcMirror" id="selfVideo" muted="muted" volume="0" ></video>
+</section>
+    <div class="btns container">
+        <button title="Microfone"id="microphone" class="bttn"onclick = "muteMeuAudio()"><i class="fas fa-microphone-alt"></i></button>
+        <button title="Aúdio"id="mic" class="bttn"onclick = "muteOutroAudio()"><i class="fas fa-volume-up"></i></button>
+        <button title="Vídeo"id="ocultaVideo" class="bttn"onclick = "muteVideo()"><i class="fas fa-video"></i></i></button>
+        <button title="Chat" id="sidebarCollapse" class="bttn"onclick = 'vincularIdBotao()'><i class="fas fa-comments"></i></i></button>
+        <button title="Sair" class="bttn call" onclick = "sair()"><i class="fas fa-phone"></i></button>  
+            </div><!--btns-->
+        </div><!--content-->
+</div><!--wrapper-->
+<!------------video----------------->
+<!------------------------------------------------------------------------------->
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<!------------------------------------------------------------------------------->
+<!------------------script--menu------------------------------>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+            $('#menu-click').on('click', function () {
+                $('#sidebar').toggleClass('active');
+            });
+        });
+    </script>
+<!------------------script--menu------------------------------>
+
 </body>
 </html>

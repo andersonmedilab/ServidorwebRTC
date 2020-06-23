@@ -19,14 +19,7 @@
     </div><!--container-->
 </body>
 <script>
-    var parametrosUrl;
     $( document ).ready(function() {
-    var conexao = new Object();
-    CapturaParametrosUrl()
-    var chaveValor = parametrosUrl.toString().split('=');
-    console.log(parametrosUrl.toString())
-    conexao[chaveValor[0]] = chaveValor[1];
-    console.log(conexao)
     var sairComOS = "Cancelando consulta pós confirmação"
     var posicao = document.getElementById("posicao");
     function sairConsultaComOS(){
@@ -71,25 +64,6 @@
     },3000)
 
     })
-
-    function CapturaParametrosUrl() {
-
-//captura a url da página
-var url = window.location.href; 
-
-//tenta localizar o ?
-var res = url.split('?'); 
-
-if (res[1] === undefined) {
-    alert('página sem parâmetros.');
-}
-
-if (res[1] !== undefined) {
-    //tenta localizar os & (pode haver mais de 1)
-    var parametros = res[1].split('&');
-    parametrosUrl = parametros;   
-}
-}
 
 </script>
 </html>

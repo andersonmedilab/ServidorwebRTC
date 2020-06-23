@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="description" content="Webmaster">
+    <meta name="keywords" content="servidorwebrtc,webrtc,rtc,medilabsistemas,medilab,medirtc">
+    <meta name="author" content="Tiago, Bernardo, Anderson, Rodrigo">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="./css/imagens/icon.png" />
     <link rel="stylesheet" href="sair.css">
     <title>Sair</title>
 </head>
 <body>
     <div class="container">
+        <img class="logoicon" src="./css/imagens/logoicon.png" alt="">
         <h1>Obrigado por utilizar nossos serviços!</h1>
         <h2>Cuide-se e fique em casa!</h2>
+        <button id="btn-sair" onclick="sairConsulta()">Sair da fila</button>
     </div><!--container-->
 </body>
+<script>
+    function sairConsulta(){
+       window.location.href = "http://localhost:8080/mediagenda_web/#/dashboard";
+   }
+</script>
 </html>

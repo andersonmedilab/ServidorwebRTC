@@ -1,115 +1,300 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500&display=swap');
+/*   Raiz do site    */
+    @import url('https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500&display=swap');
 
-*{
-    font-family: 'Baloo Thambi 2', cursive;
-    outline: none;
-    text-decoration: none;
-    margin: 0;
-    padding: 0;  
-    
-}
+    *{
+        font-family: 'Baloo Thambi 2', cursive;
+        outline: none !important;
+        outline-style: none !important;
+        text-decoration: none !important;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;        
+    }
+    /*    Fundo da página    */
+    body, html{
+        width: 100%;
+        height: 100%;
+        background: url(./imagens/img.jpg) no-repeat;
+        background-size: cover;
+        background-position: center center;
+        overflow: hidden;
+    }
+    /*   Chat   */
+    .navbar {
+        padding: 15px 10px;
+        background-color: #fff;
+        border: none;
+        border-radius: 0;
+        margin-bottom: 40px;
+        box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    }
 
-body, html{
-    width: 100%;
-    height: 100%;
-    background: url(./imagens/img.jpg);
-    background-size: cover;
-    background-position: center center;
-    overflow: hidden;
-}
+    .navbar-btn {
+        box-shadow: none;
+        border: none;
+        align-items: center;
+    }
 
-#fundo-externo {
-    position: relative; 
+    .wrapper {
+        display: flex;
+        width: 100%;
+        align-items: stretch;
+    }
 
-}
+    #sidebar {
+        overflow: hidden !important;
+        min-width: 300px;
+        max-width: 300px;
+        max-height: 100%;
+        background-color: #fff;
+        transition: all 0.3s;
+        margin-left: -300px;
+    }
 
-#fundo {
-    margin: 0 auto;
-}
+    #sidebar.active {
+        margin-left: 0;
+    }
 
-.content-center{
-    display: inline-block;
-    padding: 0 2%;
-    max-height: 100%;
-    width: 97%;
+    #sidebar .sidebar-header {
+        display: flex;
+        flex-direction: row;
+        padding: 2% 0;
+        background-color:#2066a2;
+    }
 
-}
+    .logo{
+        width: 140px;
+        height: 32px;
+        background: url(./imagens/logo.png) no-repeat;
+        background-position: center;
+        background-size: 100% 100%;
+    }
+    .close{
+        display: block;
+        position: relative;
+        left: 40%;
+    }
 
-#callerVideo{
-    width:80%;
-    height: 88vh;
-    background-color: #000;
-}
+    .fa-window-close{
+        font-size: 25px;
+        color: #fff !important;
+        text-align: center;
+    }
 
-#selfVideo{
-    width: 17%;
-    height: 30vh;
-    margin-left: 30px;
-    background-color: #000;
-}
-
-.box{
-    width: 70%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.bttn{
-    background: none;
-    font-size: 27px;
-    color: #fff;
-    padding: 5px 15px;
-    margin-left: 25px;
-    text-align: center;
-    cursor: pointer;
-    border:none;
-}
-
-.bttn:hover{ color: #000 !important; }
-
-.call{ 
-    -moz-transform: rotate(-135deg);
-    -o-transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg); 
-    transform: rotate(-135deg);
-    color: rgb(187, 9, 9) !important;}
+    .text-chat{
+        overflow: auto;
+        padding: 5px;
+        border: none;
+        border-bottom: 1px solid #ccc;
+        margin-left: 5px;
+        width: 98%;
+        height: 80vh;
+    }
 
 
-@media  (max-width: 1024px) {
-        #callerVideo{
-        width:100%;
-        height: 40vh;
+    .fileSender,
+    .receiveBlock,
+    .textoBox{
+        overflow-wrap: break-word;
+        width: 100%;
+    }
+    .fileSender{
+        border-radius: 5px;
+        background-color:#2066a2;
+        color:#392626;
+        padding : 2%;
+        margin-bottom: 5px;
+    }
+    .receiveBlock{
+        border-radius: 5px;
+        background-color:#e7e7e7;
+        color:rgb(0, 0, 0);
+        padding : 2%;
+        margin-bottom: 5px;
+    }
+
+    .textoBox{
+        border-radius: 5px;
+        background-color:#e7e7e7;
+        color:#392626;
+        padding : 2%;
+        margin-bottom: 5px;
+    }
+
+    b{
+        color:#2066a2;
+        font-size: 18px;
+    }
+
+    .horaChat{
+        color: rgb(0, 0, 0);
+        font-weight: 200;
+        font-size: 13px;
+        margin-left: 7px;
+    }
+
+
+    .botaoDownload{
+        border: none;
+        background: none;
+        cursor: pointer;
+        color: #fff;
+        font-size: 18px;
+        margin-left: 3px;
+    }
+
+    .campos{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    input[type="file"],
+    input[type="submit"] {
+        display: none;
+      }
+
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+     
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+    }
+     
+    ::-webkit-scrollbar-thumb {
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        background:#2066a2;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
+    }
+    ::-webkit-scrollbar-thumb:window-inactive {
+        background:#2066a2; 
+    }
+
+    .btn{
+        padding: 5px;         
+        border: none;
+        background: none;
+    }
+
+    .i{
+        color: #2066a2;
+        font-size: 20px;
+        cursor: pointer; 
+        margin-top: 15px;
+        margin-left: 10px;
+    }
+
+    .input-text{ 
+        width: 220px; 
+        padding-left: 7px;
+        margin-left: 3px;
+    }
+
+    /*      videos     */
+
+    #content {
+        width: 100%;
+        padding: 20px;
+        min-height: 100vh;
+        transition: all 0.3s;
+    }
+
+    section.content-center {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+        height: 95%;
+    }
+
+    #callerVideo {
+        width: 80%;
+        height: 90vh;
+        background-color: #000;
     }
 
     #selfVideo{
-        margin-top: 20px;
-        width: 100%;
-        height: 40vh;
-        margin-left: auto;
+        width: 20%;
+        height: 40%;
+        margin-left: 20px;  
+        background-color: #000;
     }
-    .box{ width: 100%; }
+    /*        Botões      */
+    .btns {
+        max-width: 550px;
+        text-align: center;
+        position: absolute;
+        left: 20%;
+    }
+    .bttn{
+        background: none;
+        font-size: 27px;
+        color: #fff;
+        padding: 5px 15px;
+        margin-left: 20px;
+        cursor: pointer;
+        border:none;
+    }
 
-    .content-center {
-        padding: 10px 1%;
-   }
-   .bttn{ font-size: 19px; }
-}
+    .bttn:hover{ color: #000 !important; }
 
-@media  (max-width: 765px) {
+    .call{ 
+        -moz-transform: rotate(-135deg);
+        -o-transform: rotate(-135deg);  
+        -webkit-transform: rotate(-135deg); 
+        transform: rotate(-135deg);
+        color: rgb(187, 9, 9) !important;
+    }
 
-    .bttn{ margin-left: 10px; }
-}
 
-@media  (max-width: 411px) {
-    #callerVideo{
-       width:100%;
-       height: 35vh;
-   }
-   
-   #selfVideo{
-       margin-top: 20px;
-       width: 100%;
-       height: 35vh;
-   }
-}
+
+    /*------------Responsivo-------------------*/
+
+    /*------------1024px-------------------*/
+
+    @media ( max-width: 1024px ){
+
+        section.content-center {
+            flex-direction: column;
+        }
+
+        #callerVideo, #selfVideo {
+            width: 100%;
+            height: 40vh;
+        }
+
+        #selfVideo { margin-top: 10px;}  
+        
+        .btns {
+            text-align: center;
+            position: static;
+            left: 0;
+        }
+
+        .bttn{ margin-left: 0; }  
+    }
+
+    /*----------------670px--------------------*/
+
+    @media ( max-width: 670px ){
+
+        #sidebar {
+            z-index: 2;
+            height: 100%;
+            position: absolute;
+        }    
+    }
+
+
+    /*-------------320px-----------------------*/
+
+    @media ( max-width: 370px ){
+
+    .bttn {
+        margin-left: -6px; 
+        font-size: 16px !important;}
+    }

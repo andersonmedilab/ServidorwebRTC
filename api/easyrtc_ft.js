@@ -235,7 +235,7 @@ easyrtc_ft.buildFileSender = function(destUser, progressListener, options) {
         });
 
         // Offer can be offered only once
-        delete filesOffered[msgData.seq];
+        // delete filesOffered[msgData.seq];
     }
 
     function cancelFilesOffer(offerSeq) {
@@ -512,7 +512,7 @@ easyrtc_ft.buildFileSender = function(destUser, progressListener, options) {
         var offer = filesOffered[msgData.seq];
 
         // Offer can be offered only once
-        delete filesOffered[msgData.seq];
+        // delete filesOffered[msgData.seq];
 
         if (!alreadySending && !curFile) {
             sendOffer(offer);

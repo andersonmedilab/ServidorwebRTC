@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+    <meta name="description" content="Webmaster">
+    <meta name="keywords" content="servidorwebrtc,webrtc,rtc,medilabsistemas,medilab,medirtc">
+    <meta name="author" content="Tiago, Bernardo, Anderson, Rodrigo">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <link rel="shortcut icon" href="./css/imagens/icon.png" />
     <link rel="stylesheet" href="erro.css">
     <title>Erro 404</title>
 </head>
-<body>
-    <div class="container">
+<body>     
+<div class="container">
+        <img class="logoicon" src="./css/imagens/logoicon.png" alt="">
+    <div class="box">
+        <img class="logo" src="./css/imagens/perfil.png" alt="">
+        <p> Olá </p>
+    </div><!--box--->
     <h1 class="text">A Página que você tentou se conectar ou está cheia ou não existe.</h1>
     <h2 class="text">Entre em contato com o(a) atendente para criação de uma nova sala ou aguarde a sua consulta.</h2>
-    <div>
+<div>
         <h3>Se você ainda não se consultou e está na espera, clique em "Voltar para a fila", se já se consultou, clique em "Voltar para a tela inicial"</h1>
             <div class="btn-box">
-        <button class="text btn" onclick="">Voltar para a fila</button>
+        <button class="text btn" onclick=" botaoespera()">Voltar para a fila</button>
         <button class="text btn" onclick="funcaoParaExecutar()">Voltar para a tela inicial</button>
     </div><!--btn-box-->
     </div><!--container-->
@@ -21,10 +31,10 @@
 </body>
 <script>
     function botaoespera(){
-        window.location.href= "salaEsperaConsulta.html";
+        window.location.href= "http://localhost:8080/mediagenda_web/salaEspera.html";
     }
     function funcaoParaExecutar() {  
-        window.open('http://www.google.com.br');
+        window.location.href= "http://localhost:8080/mediagenda_web/#/dashboard";
     }
 </script>
 </html>
