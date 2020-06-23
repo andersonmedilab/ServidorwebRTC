@@ -12,7 +12,7 @@ var contador = 0;
 var statusDownload = 'done';
 let link;
 let objectURL;
-let posicaoNodeListReceive;
+var posicaoNodeListReceive;
 
 function connect() {
     CapturaParametrosUrl();
@@ -373,8 +373,8 @@ function acceptRejectCB(otherGuy, fileNameList, wasAccepted) {
     console.log(conversation)
     peers[otherEasyrtcid] = true;
     
-    console.log(document.getElementById('conversation').querySelectorAll('div'))
-    var nodeListDivReceive = document.getElementById('conversation').querySelectorAll('div')
+    console.log(document.getElementById('conversation').querySelectorAll('.receiveBlock'))
+    var nodeListDivReceive = document.getElementById('conversation').querySelectorAll('.receiveBlock')
 
     var receiveBlock = nodeListDivReceive[nodeListDivReceive.length - 1];
     // jQuery(receiveBlock).empty();
@@ -411,13 +411,14 @@ function acceptRejectCB(otherGuy, fileNameList, wasAccepted) {
     button1.className = "botaoDownload"
     button1.innerHTML = '<i class="fas fa-download"></i>'
     button1.style.color = "#2066a2"
+    const indexNodeList =  nodeListDivReceive.length - 1
     button1.onclick = function() {
         console.log('entrei no botão do accept')
         // jQuery(receiveBlock).empty();
         if (statusDownload === 'done') {
             wasAccepted(true);
             carregando.style.display = "inline-block"
-            posicaoNodeListReceive = nodeListDivReceive.length - 1
+            posicaoNodeListReceive = indexNodeList
         } 
     };
     receiveBlock.appendChild(button1);
@@ -441,8 +442,10 @@ function receiveStatusCB(otherGuy, msg) {
     console.log('entrei no recebimento de arquvo 2')
     var receiveBlock = document.getElementById('receivearea');
     var carregandoDownload = document.querySelectorAll('#imagemDownload')
-    statusDownload = msg.status;
-    if (statusDownload === 'done') {
+    
+    if (msg.status === 'done') {
+        console.log(carregandoDownload)
+        console.log(posicaoNodeListReceive)
         carregandoDownload[posicaoNodeListReceive].style.display = 'none'
     if( !receiveBlock) return;
     console.log('testando a passada')
@@ -521,7 +524,7 @@ function updateStatusDiv(state, verificador) {
             console.log(verificador)
             if (verificador!== undefined) {
                 console.log('teste')
-                emissor.innerHTML = "<b>"+username+"</b>" + "<span class = 'horaChat'>" + pegarDataAtual() +":"+"</span>" +"<br>" + "Download acima de 200mb não permitido"
+                emissor.innerHTML = "<b>"+username+"</b>" + "<span class = 'horaChat'>" + pegarDataAtual() +":"+"</span>" +"<br>" + "Download acima de 20mb não permitido"
             } else {
                 var button = document.createElement("button");
                 button.className = "botaoDownload"
@@ -635,7 +638,7 @@ function loginSuccess(easyrtcid) {
         console.log(this.files[0].size)
         console.log(this.files[0].size/(1024*1024))
 
-        if (limitadorDownload <= 200) {
+        if (limitadorDownload <= 20) {
             arrayFiles[contador] = [this.files[0]]
             filesHandler(fileInput.files);
             contador+=1
@@ -643,7 +646,6 @@ function loginSuccess(easyrtcid) {
 
         } else {
             updateStatusDiv({seq:1,status:"waiting"}, true)
-            alert('Tamanho de download maior que 200mb')
         }
         
       
