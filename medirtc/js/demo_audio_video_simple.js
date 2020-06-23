@@ -45,6 +45,7 @@ function muteMeuAudio() {
 }
 
 function updateMicImage(toggle) {
+    console.log('oi')
     var microphone = document.getElementById("microphone");
     if(!toggle){
         easyrtc.enableMicrophone(toggle)
