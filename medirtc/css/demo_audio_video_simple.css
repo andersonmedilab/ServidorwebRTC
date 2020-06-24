@@ -264,7 +264,7 @@
 
         #callerVideo, #selfVideo {
             width: 100%;
-            height: 40vh;
+            height: 42vh;
         }
 
         #selfVideo { margin-top: 10px;}  
@@ -286,15 +286,17 @@
             z-index: 2;
             height: 100%;
             position: absolute;
-        }    
+        }           
     }
 
 
     /*-------------320px-----------------------*/
 
-    @media ( max-width: 370px ){
+    @media ( max-width: 460px ){
 
-    .bttn {
-        margin-left: -6px; 
-        font-size: 16px !important;}
+    .bttn { margin-left: -6px; }
+  
+    section.content-center { height: 85%; }      
+    
+    .text-chat{ height: 75vh; }
     }
