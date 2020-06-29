@@ -13,18 +13,33 @@ var statusDownload = 'done';
 let link;
 let objectURL;
 var posicaoNodeListReceive;
+var chaveValor;
 
 function connect() {
     CapturaParametrosUrl();
-    var chaveValor = parametrosUrl.toString().split(",");
+    chaveValor = parametrosUrl.toString().split(",");
 
     conexao[chaveValor[0].substring(0, chaveValor[0].indexOf("="))] = chaveValor[0].substring(chaveValor[0].indexOf("=") + 1);
     conexao[chaveValor[1].substring(0, chaveValor[1].indexOf("="))] = chaveValor[1].substring(chaveValor[1].indexOf("=") + 1);
     conexao[chaveValor[2].substring(0, chaveValor[2].indexOf("="))] = chaveValor[2].substring(chaveValor[2].indexOf("=") + 1);
     conexao[chaveValor[3].substring(0, chaveValor[3].indexOf("="))] = chaveValor[3].substring(chaveValor[3].indexOf("=") + 1);
     conexao[chaveValor[4].substring(0, chaveValor[4].indexOf("="))] = chaveValor[4].substring(chaveValor[4].indexOf("=") + 1);
+
     if (chaveValor[5]!==undefined){
-       conexao[chaveValor[5].substring(0, chaveValor[5].indexOf("="))] = chaveValor[5].substring(chaveValor[5].indexOf("=") + 1);
+        conexao[chaveValor[5].substring(0, chaveValor[5].indexOf("="))] = chaveValor[5].substring(chaveValor[5].indexOf("=") + 1);
+        var decoded = atob(conexao.URL)
+        decoded = decoded.split('/salaEspera')
+        conexao.URL = decoded[0]
+    }
+    
+    if (chaveValor[6]!==undefined){
+       conexao[chaveValor[6].substring(0, chaveValor[6].indexOf("="))] = chaveValor[6].substring(chaveValor[6].indexOf("=") + 1);
+    }
+
+    console.log(conexao)
+
+    if(!conexao.NOMEMEDICO){
+        conexao.NOMEMEDICO = 'Atendente'
     }
 
     conexao.NOMEPACIENTE = conexao.NOMEPACIENTE.replace(/%20/g, " ")
@@ -37,6 +52,7 @@ function connect() {
     conexao.NOMEMEDICO = conexao.NOMEMEDICO.split(' ')
     conexao.NOMEMEDICO = conexao.NOMEMEDICO[0]
     console.log(conexao.NOMEPACIENTE)
+    console.log(conexao)
 
     //easyrtc.enableDebug(true);
     easyrtc.enableDataChannels(true);
@@ -221,20 +237,17 @@ function vincularIdBotao() {
     O problema fica na tela de quem não deu F5 que estára com um easyrtcid desatualizado, para isso é feita uma segunda verificação ao clicar
     em enviar a mensagem que verifica se o valor em updateClient continua sendo o mesmo valor que está em easyrtcidCaller */
     let buttonMsg = document.getElementById('enviar_menssagem');
-    buttonMsg.onclick = function(easyrtcidCaller) {
-        return function() {
+    buttonMsg.onclick = function() {
             if (easyrtc.roomData.default.clientListDelta!=undefined){
                 for (let easyrtcid in easyrtc.roomData.default.clientListDelta.updateClient){
                     console.log(easyrtc.roomData.default.clientListDelta.updateClient)
                     if (easyrtcid!==easyrtcidCaller){
                         easyrtcidCaller = easyrtcid
-                    }
-                       
+                    }       
                 }
             }
             sendStuffP2P(easyrtcidCaller); //envia a mensagem pro outro usuário
-        };
-    }(easyrtcidCaller);
+    };
 
     let inputEnviarMsg = document.querySelector('#menssagem')
     inputEnviarMsg.addEventListener("keydown", function(event) {
@@ -672,13 +685,21 @@ function loginSuccess(easyrtcid) {
         }
     }
 
+    let urlDirecionamento;
+
+    if (chaveValor[5] === undefined) {
+        urlDirecionamento = "erro.html"
+    } else {
+        urlDirecionamento = "erro.html" + "?URL="+chaveValor[5].substring(chaveValor[5].indexOf("=") + 1);
+    }
+
     if(cont > 2 ){
         easyrtc.disconnect();
-        window.location.href = "erro.html";
+        window.location.href = urlDirecionamento;
     }
     if(logar === false ){
         easyrtc.disconnect();
-        window.location.href = "erro.html";
+        window.location.href = urlDirecionamento;
     }
 
     if(conexao.STATUS != "OK"){
@@ -686,7 +707,7 @@ function loginSuccess(easyrtcid) {
 
         } else {
             easyrtc.disconnect();
-            window.location.href = "erro.html";
+            window.location.href = urlDirecionamento;
         }
     }
 }
@@ -707,9 +728,13 @@ function loginFailure(errorCode, message) {
 
 function sair(){
     //window.location.href = "salaEspera.html";
-    if(conexao.STATUS == "OK"){
-        window.location.href = "http://localhost:8080/mediagenda_web/salaEspera.html";
-    }else if(conexao.STATUS == "Conf"){
-        window.location.href = "sair.html";
-    } 
+    if (chaveValor[5] !== undefined) {
+        if(conexao.STATUS === 'Conf') {
+            window.location.href = conexao.URL
+        }else if (conexao.STATUS === 'OK') {
+            window.location.href = conexao.URL +"/salaEspera.html"
+        }
+    } else {
+        self.close()
+    }
 }

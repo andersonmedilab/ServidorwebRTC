@@ -290,13 +290,15 @@
     }
 
 
-    /*-------------320px-----------------------*/
+    /*-------------460px-----------------------*/
 
     @media ( max-width: 460px ){
 
-    .bttn { margin-left: -6px; }
+    .bttn { margin-left: -10px; }
   
     section.content-center { height: 85%; }      
     
     .text-chat{ height: 75vh; }
     }
+
+   

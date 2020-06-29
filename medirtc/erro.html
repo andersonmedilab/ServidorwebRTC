@@ -30,11 +30,46 @@
     </div><!--tela-->
 </body>
 <script>
+    var parametrosUrl;
+    var conexao = new Object();
+    function CapturaParametrosUrl() {
+
+        //captura a url da página
+        var url = window.location.href; 
+
+        //tenta localizar o ?
+        var res = url.split('?'); 
+    
+        if (res[1] === undefined) {
+            // alert('página sem parâmetros.');
+        }
+
+        if (res[1] !== undefined) {
+            //tenta localizar os & (pode haver mais de 1)
+            var parametros = res[1].split('&');
+            parametrosUrl = parametros;   
+        }
+    }
+    CapturaParametrosUrl();
+    chaveValor = parametrosUrl.toString().split(",");
+    console.log(chaveValor)
+    conexao[chaveValor[0].substring(0, chaveValor[0].indexOf("="))] = chaveValor[0].substring(chaveValor[0].indexOf("=") + 1);
+    console.log(conexao)
+
+    if (chaveValor[0] === undefined) {
+        urlDirecionamento = "erro.html"
+    } else {
+        var decoded = atob(conexao.URL)
+        decoded = decoded.split('/salaEspera')
+        conexao.URL = decoded[0]
+    }
+    console.log(conexao)
+
     function botaoespera(){
-        window.location.href= "http://localhost:8080/mediagenda_web/salaEspera.html";
+        window.location.href = conexao.URL +"/salaEspera.html"
     }
     function funcaoParaExecutar() {  
-        window.location.href= "http://localhost:8080/mediagenda_web/#/dashboard";
+        window.location.href= conexao.URL;
     }
 </script>
 </html>
