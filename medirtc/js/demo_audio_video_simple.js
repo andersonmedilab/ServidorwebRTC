@@ -735,6 +735,6 @@ function sair(){
             window.location.href = conexao.URL +"/salaEspera.html"
         }
     } else {
-        self.close()
+        window.location.href = "sair.html"
     }
 }

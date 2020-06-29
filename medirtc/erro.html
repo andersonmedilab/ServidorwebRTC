@@ -57,19 +57,20 @@
     console.log(conexao)
 
     if (chaveValor[0] === undefined) {
-        urlDirecionamento = "erro.html"
+        urlDirecionamento = "sair.html"
     } else {
         var decoded = atob(conexao.URL)
         decoded = decoded.split('/salaEspera')
         conexao.URL = decoded[0]
+        urlDirecionamento = conexao.URL
     }
     console.log(conexao)
 
     function botaoespera(){
-        window.location.href = conexao.URL +"/salaEspera.html"
+        window.location.href = urlDirecionamento +"/salaEspera.html"
     }
     function funcaoParaExecutar() {  
-        window.location.href= conexao.URL;
+        window.location.href= urlDirecionamento;
     }
 </script>
 </html>
