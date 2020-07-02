@@ -24,12 +24,17 @@ function connect() {
     conexao[chaveValor[2].substring(0, chaveValor[2].indexOf("="))] = chaveValor[2].substring(chaveValor[2].indexOf("=") + 1);
     conexao[chaveValor[3].substring(0, chaveValor[3].indexOf("="))] = chaveValor[3].substring(chaveValor[3].indexOf("=") + 1);
     conexao[chaveValor[4].substring(0, chaveValor[4].indexOf("="))] = chaveValor[4].substring(chaveValor[4].indexOf("=") + 1);
-
+    console.log(chaveValor[5])
+    
     if (chaveValor[5]!==undefined){
-        conexao[chaveValor[5].substring(0, chaveValor[5].indexOf("="))] = chaveValor[5].substring(chaveValor[5].indexOf("=") + 1);
-        var decoded = atob(conexao.URL)
-        decoded = decoded.split('/salaEspera')
-        conexao.URL = decoded[0]
+        if (chaveValor[5]!=='P=A') {
+            conexao[chaveValor[5].substring(0, chaveValor[5].indexOf("="))] = chaveValor[5].substring(chaveValor[5].indexOf("=") + 1);
+            var decoded = atob(conexao.URL)
+            decoded = decoded.split('/salaEspera')
+            conexao.URL = decoded[0]
+        } else {
+            conexao[chaveValor[5].substring(0, chaveValor[5].indexOf("="))] = chaveValor[5].substring(chaveValor[5].indexOf("=") + 1);
+        }
     }
     
     if (chaveValor[6]!==undefined){
@@ -694,8 +699,9 @@ function loginSuccess(easyrtcid) {
     }
 
     if(cont > 2 ){
+        console.log('teste')
         easyrtc.disconnect();
-        window.location.href = urlDirecionamento;
+        // window.location.href = urlDirecionamento;
     }
     if(logar === false ){
         easyrtc.disconnect();

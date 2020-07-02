@@ -181,7 +181,7 @@
 
     #enviar_menssagem{
         margin-left: 7px;
-        width: 30px;
+        width: 28px;
         height: 30px;
         cursor: pointer;
         background: none;
@@ -191,7 +191,7 @@
     .fa-paper-plane{
         position: relative;
         margin-left: -2px !important;
-        margin-top: 4px !important;
+        margin-top: 6px !important;
     }
 
     .i{
@@ -203,9 +203,9 @@
     }
 
     .input-text{ 
-        width: 220px; 
+        width: 200px; 
         padding-left: 7px;
-        margin-left: 3px;
+        margin-left: 7px;
     }
 
     /*      videos     */
@@ -266,7 +266,7 @@
 
 
 
-    /*------------Responsivo-------------------*/
+     /*------------Responsivo-------------------*/
 
     /*------------1024px-------------------*/
 
@@ -304,15 +304,21 @@
     }
 
 
-    /*-------------320px-----------------------*/
+    /*-------------460px-----------------------*/
 
-    @media ( max-width: 375px ){
+    @media ( max-width: 460px ){
 
-    .bttn {
-        margin-left: -6px; 
-        font-size: 16px !important;}
-  
-    section.content-center { height: 90%;  }
+    .bttn { margin-left: -10px; }
 
-    .btns{ margin-top: 5px;}          
+    section.content-center { height: 80vh; }
+
+    .text-chat{ height: 75vh; }
+    }
+
+    @media ( max-width: 320px ){
+
+    .bttn { margin-left: -14px; }
+
+    section.content-center { height: 75vh; }
+
     }
