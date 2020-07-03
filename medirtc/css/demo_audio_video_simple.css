@@ -308,17 +308,20 @@
 
     @media ( max-width: 460px ){
 
+   section.content-center { height: 82vh; }
+
     .bttn { margin-left: -10px; }
 
-    section.content-center { height: 80vh; }
-
     .text-chat{ height: 75vh; }
+    
     }
+
+   /*-----------------320px--------------*/
 
     @media ( max-width: 320px ){
 
     .bttn { margin-left: -14px; }
 
-    section.content-center { height: 75vh; }
+    section.content-center { height: 78vh; }
 
     }

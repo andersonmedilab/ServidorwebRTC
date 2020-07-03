@@ -14,6 +14,7 @@ let link;
 let objectURL;
 var posicaoNodeListReceive;
 var chaveValor;
+let erroSemCamera = null;
 
 function connect() {
     CapturaParametrosUrl();
@@ -244,13 +245,18 @@ function vincularIdBotao() {
     let buttonMsg = document.getElementById('enviar_menssagem');
     buttonMsg.onclick = function() {
             if (easyrtc.roomData.default.clientListDelta!=undefined){
-                for (let easyrtcid in easyrtc.roomData.default.clientListDelta.updateClient){
-                    console.log(easyrtc.roomData.default.clientListDelta.updateClient)
-                    if (easyrtcid!==easyrtcidCaller){
-                        easyrtcidCaller = easyrtcid
-                    }       
+                if (easyrtc.roomData.default.clientListDelta.updateClient !== undefined) {
+                    for (let easyrtcid in easyrtc.roomData.default.clientListDelta.updateClient){
+                        console.log(easyrtc.roomData.default.clientListDelta.updateClient)
+                        if (easyrtcid!==easyrtcidCaller){
+                            easyrtcidCaller = easyrtcid
+                        }       
+                    }
+                } else if (easyrtc.roomData.default.clientListDelta.removeClient!== undefined) {
+                    location.reload();
                 }
             }
+            console.log(easyrtcidCaller)
             sendStuffP2P(easyrtcidCaller); //envia a mensagem pro outro usuário
     };
 
@@ -258,17 +264,24 @@ function vincularIdBotao() {
     inputEnviarMsg.addEventListener("keydown", function(event) {
             if (event.key === "Enter") {
                 event.preventDefault();
-            if (easyrtc.roomData.default.clientListDelta!=undefined){
-                for (let easyrtcid in easyrtc.roomData.default.clientListDelta.updateClient){
-                    console.log(easyrtc.roomData.default.clientListDelta.updateClient)
-                    if (easyrtcid!==easyrtcidCaller){
-                        easyrtcidCaller = easyrtcid 
-                    }  
+                if (easyrtc.roomData.default.clientListDelta!=undefined){
+                    if (easyrtc.roomData.default.clientListDelta.updateClient !== undefined) {
+                        for (let easyrtcid in easyrtc.roomData.default.clientListDelta.updateClient){
+                            console.log(easyrtc.roomData.default.clientListDelta.updateClient)
+                            if (easyrtcid!==easyrtcidCaller){
+                                easyrtcidCaller = easyrtcid
+                            }       
+                        }
+                    } else if (easyrtc.roomData.default.clientListDelta.removeClient!== undefined) {
+                        location.reload();
+                    }
                 }
-            }
+            console.log(easyrtcidCaller)
             sendStuffP2P(easyrtcidCaller); //envia a mensagem pro outro usuário
             }
         });
+
+    
 }
 
 function pegarDataAtual(){
@@ -690,6 +703,21 @@ function loginSuccess(easyrtcid) {
         }
     }
 
+    // inicio solução para o bug do vegetal e animal
+
+/*     if (cont === 1) {
+        let stop = setInterval(function(){
+            console.log('entrei no interval')
+            if (easyrtc.roomData.default.roomStatus === 'update'){
+                console.log('sai do interval')
+                if (erroSemCamera === null) {
+                    location.reload();
+                }
+                clearInterval(stop); 
+            }
+        },5000)
+    } */
+
     let urlDirecionamento;
 
     if (chaveValor[5] === undefined) {
@@ -722,6 +750,7 @@ function loginSuccess(easyrtcid) {
 function loginFailure(errorCode, message) {
 
     if(message.toString() === "Failed to get access to local media. Error code was NotFoundError."){
+        erroSemCamera = "Failed to get access to local media. Error code was NotFoundError."
         alert("Você está sem transmitir vídeo, ou você não possui um dispositivo de vídeo ou alguma configuração do seu navegador não permite utilizar o mesmo")
         easyrtc.enableVideo(false)
         easyrtc.easyApp("easyrtc.audioVideoSimple", "selfVideo", ["callerVideo"], loginSuccess, loginFailure);
