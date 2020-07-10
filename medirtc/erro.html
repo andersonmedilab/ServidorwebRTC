@@ -14,16 +14,10 @@
 <body>     
 <div class="container">
         <img class="logoicon" src="./css/imagens/logoicon.png" alt="">
-    <div class="box">
-        <img class="logo" src="./css/imagens/perfil.png" alt="">
-        <p> Olá </p>
-    </div><!--box--->
-    <h1 class="text">A Página que você tentou se conectar ou está cheia ou não existe.</h1>
+    <h1 class="text mt">A página que você tentou se conectar ou está cheia ou não existe.</h1>
     <h2 class="text">Entre em contato com o(a) atendente para criação de uma nova sala ou aguarde a sua consulta.</h2>
 <div>
-        <h3>Se você ainda não se consultou e está na espera, clique em "Voltar para a fila", se já se consultou, clique em "Voltar para a tela inicial"</h1>
             <div class="btn-box">
-        <button class="text btn" onclick=" botaoespera()">Voltar para a fila</button>
         <button class="text btn" onclick="funcaoParaExecutar()">Voltar para a tela inicial</button>
     </div><!--btn-box-->
     </div><!--container-->
@@ -66,9 +60,6 @@
     }
     console.log(conexao)
 
-    function botaoespera(){
-        window.location.href = urlDirecionamento +"/salaEspera.html"
-    }
     function funcaoParaExecutar() {  
         window.location.href= urlDirecionamento;
     }

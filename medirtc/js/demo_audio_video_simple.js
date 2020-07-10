@@ -18,6 +18,7 @@ let erroSemCamera = null;
 
 function connect() {
     CapturaParametrosUrl();
+    detectBrowser();
     chaveValor = parametrosUrl.toString().split(",");
 
     conexao[chaveValor[0].substring(0, chaveValor[0].indexOf("="))] = chaveValor[0].substring(chaveValor[0].indexOf("=") + 1);
@@ -762,14 +763,69 @@ function loginFailure(errorCode, message) {
 }
 
 function sair(){
-    //window.location.href = "salaEspera.html";
     if (chaveValor[5] !== undefined) {
         if(conexao.STATUS === 'Conf') {
             window.location.href = conexao.URL
         }else if (conexao.STATUS === 'OK') {
-            window.location.href = conexao.URL +"/salaEspera.html"
+            let codCrip = btoa(conexao.CRM)
+            window.location.href = conexao.URL +"/salaEspera.html" + '?' + codCrip
         }
     } else {
         window.location.href = "sair.html"
     }
+}
+
+function detectBrowser(){
+
+    console.log('teste se entra pip 2')
+
+    const pip = document.querySelector('#PIPBtn')
+
+    let isOpera = (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
+
+    let isFirefox = typeof InstallTrigger !== 'undefined';
+ 
+    let isSafari = /constructor/i.test(window.HTMLElement) || (function (p) { return p.toString() === "[object SafariRemoteNotification]"; })(!window['safari'] || (typeof safari !== 'undefined' && safari.pushNotification));
+
+    let isIE = /*@cc_on!@*/false || !!document.documentMode;
+
+    let isEdge = !isIE && !!window.StyleMedia;
+
+    let isChrome = !!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime);
+
+    let isEdgeChromium = isChrome && (navigator.userAgent.indexOf("Edg") != -1);
+
+    if(isOpera){
+        return 'Opera'
+    } else if (isFirefox){
+        pip.style.display= 'none'
+        return 'Firefox'
+    } else if(isEdge){
+        pip.style.display= 'none'
+        return 'Edge'
+    } else if (isSafari){
+        // pip.style.display= 'none'
+        return 'Safari'
+    } else if (isIE){
+        pip.style.display= 'none'
+        return 'IE'
+    } else if (isChrome){
+        return 'Chrome'
+    } else if (isEdgeChromium){
+        return 'EdgeChromium'
+    } else {
+        pip.style.display= 'none'
+        return 'Browser desconhecido'
+    }
+
+}
+
+async function videoFlutuante(){
+    console.log('teste se entra pip 1')
+    if(detectBrowser() === 'Opera' || detectBrowser() === 'Chrome' || detectBrowser() === 'EdgeChromium'){
+        console.log('se entra no if detect browser')
+        const video = document.querySelector('#callerVideo');
+        await video.requestPictureInPicture();
+    }
+
 }

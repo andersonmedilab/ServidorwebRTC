@@ -23,6 +23,7 @@
     <script type="text/javascript" src="../easyrtc/easyrtc_ft.js"></script>
     <script type="text/javascript" src="js/demo_audio_video_simple.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/demo_audio_video_simple.css" />
 </head>
 <body onload="connect();">
@@ -63,16 +64,17 @@
 </div><!--container-fluid-->
     <section id="videos" class="content-center">
         <video autoplay="autoplay" playsinline="playsinline" id="callerVideo"></video>
-            <video autoplay="autoplay" playsinline="playsinline" class="easyrtcMirror" id="selfVideo" muted="muted" volume="0" ></video>
-</section>
+        <video autoplay="autoplay" playsinline="playsinline" class="easyrtcMirror" id="selfVideo" muted="muted" volume="0"/></video>
+    </section>
     <div class="btns container">
         <button title="Microfone"id="microphone" class="bttn"onclick = "muteMeuAudio()"><i class="fas fa-microphone-alt"></i></button>
-        <button title="Aúdio"id="mic" class="bttn"onclick = "muteOutroAudio()"><i class="fas fa-volume-up"></i></button>
+        <button title="Aúdio"id="mic" class="bttn"onclick = "muteOutroAudio()"><i class="fas fa-volume-up"></i></button>   	
         <button title="Vídeo"id="ocultaVideo" class="bttn"onclick = "muteVideo()"><i class="fas fa-video"></i></i></button>
+        <button id="PIPBtn" class="bttn" onclick = "videoFlutuante()"><i class="material-icons">picture_in_picture_alt</i></button>
         <button title="Chat" id="sidebarCollapse" class="bttn"onclick = 'vincularIdBotao()'><i class="fas fa-comments"></i></i></button>
         <button title="Sair" class="bttn call" onclick = "sair()"><i class="fas fa-phone"></i></button>  
-            </div><!--btns-->
-        </div><!--content-->
+            </div><!--btns-container-->
+    </div><!--content-->
 </div><!--wrapper-->
 <!------------video----------------->
 <!------------------------------------------------------------------------------->
