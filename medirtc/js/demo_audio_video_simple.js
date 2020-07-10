@@ -822,10 +822,10 @@ function detectBrowser(){
 
 async function videoFlutuante(){
     console.log('teste se entra pip 1')
-    if(detectBrowser() === 'Opera' || detectBrowser() === 'Chrome' || detectBrowser() === 'EdgeChromium'){
+    // if(detectBrowser() === 'Opera' || detectBrowser() === 'Chrome' || detectBrowser() === 'EdgeChromium'){
         console.log('se entra no if detect browser')
         const video = document.querySelector('#callerVideo');
         await video.requestPictureInPicture();
-    }
+    //}
 
 }
