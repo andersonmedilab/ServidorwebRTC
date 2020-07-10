@@ -323,6 +323,7 @@
 
         section.content-center {
             flex-direction: column;
+ 	    height: 85vh; 
         }
 
         #callerVideo, #selfVideo {
@@ -355,9 +356,7 @@
 
     /*-------------460px-----------------------*/
 
-    @media ( max-width: 460px ){
-
-   section.content-center { height: 85vh; }
+    @media ( max-width: 460px ){   
 
     .btns { position: absolute; }
 
