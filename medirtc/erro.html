@@ -18,7 +18,7 @@
     <h2 class="text">Entre em contato com o(a) atendente para criação de uma nova sala ou aguarde a sua consulta.</h2>
 <div>
             <div class="btn-box">
-        <button class="text btn" onclick="funcaoParaExecutar()">Voltar para a tela inicial</button>
+        <button id = "exitButton" class="text btn" onclick="funcaoParaExecutar()">Voltar para a tela inicial</button>
     </div><!--btn-box-->
     </div><!--container-->
     </div><!--tela-->
@@ -26,6 +26,7 @@
 <script>
     var parametrosUrl;
     var conexao = new Object();
+    let chaveValor = null
     function CapturaParametrosUrl() {
 
         //captura a url da página
@@ -45,13 +46,17 @@
         }
     }
     CapturaParametrosUrl();
-    chaveValor = parametrosUrl.toString().split(",");
-    console.log(chaveValor)
-    conexao[chaveValor[0].substring(0, chaveValor[0].indexOf("="))] = chaveValor[0].substring(chaveValor[0].indexOf("=") + 1);
-    console.log(conexao)
+    if(parametrosUrl !== undefined) {
+        chaveValor = parametrosUrl.toString().split(",");
+        console.log(chaveValor)
+        conexao[chaveValor[0].substring(0, chaveValor[0].indexOf("="))] = chaveValor[0].substring(chaveValor[0].indexOf("=") + 1);
+        console.log(conexao)
+    }
 
-    if (chaveValor[0] === undefined) {
+    if (chaveValor === null) {
         urlDirecionamento = "sair.html"
+        let labelButton = document.querySelector('#exitButton')
+        labelButton.innerHTML = 'Sair'
     } else {
         var decoded = atob(conexao.URL)
         decoded = decoded.split('/salaEspera')

@@ -41,7 +41,8 @@
                 <input type="file" id="enviar_arquivo" onclick = 'vincularIdBotaoArq()'/>
                 <a id="link" download style="display: none">shouldnt be visible</a>
                 <button id="enviar_menssagem" class="enviar"><i class="i fas fa-paper-plane"></i></button>
-            </div><!--campos-->  
+            </div><!--campos--> 
+            <div id="isTexting"></div> 
         </nav>
  <!------------chat------------------>
  <!------------video----------------->
@@ -69,9 +70,16 @@
     <div class="btns container">
         <button title="Microfone"id="microphone" class="bttn"onclick = "muteMeuAudio()"><i class="fas fa-microphone-alt"></i></button>
         <button title="Aúdio"id="mic" class="bttn"onclick = "muteOutroAudio()"><i class="fas fa-volume-up"></i></button>   	
+        <div class="btn-group dropup">
+        <button type="button" class="bttn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="display:block;"><i class="material-icons">flip_camera_ios</i></button>
+            <div class="dropdown-menu">
+                <div id = 'testeScreen'>
+                </div>                
+            </div><!--dropmenu-->
+        </div><!--btn-group--> 
         <button title="Vídeo"id="ocultaVideo" class="bttn"onclick = "muteVideo()"><i class="fas fa-video"></i></i></button>
         <button id="PIPBtn" class="bttn" onclick = "videoFlutuante()"><i class="material-icons">picture_in_picture_alt</i></button>
-        <button title="Chat" id="sidebarCollapse" class="bttn"onclick = 'vincularIdBotao()'><i class="fas fa-comments"></i></i></button>
+        <button title="Chat" id="sidebarCollapse" class="bttn"onclick = 'vincularIdBotao()'><i class="fas fa-comments"></i></i> <div style="display: none;" id= "contadorMsg"></div></button>
         <button title="Sair" class="bttn call" onclick = "sair()"><i class="fas fa-phone"></i></button>  
             </div><!--btns-container-->
     </div><!--content-->
@@ -87,12 +95,22 @@
 <!------------------------------------------------------------------------------->
 <!------------------script--menu------------------------------>
     <script type="text/javascript">
+        let chatOpen = false
         $(document).ready(function () {
             $('#sidebarCollapse').on('click', function () {
                 $('#sidebar').toggleClass('active');
+                if(chatOpen === false){
+                    chatOpen = true
+                } else {
+                    chatOpen = false
+                }
+                
+                console.log(chatOpen)
             });
             $('#menu-click').on('click', function () {
                 $('#sidebar').toggleClass('active');
+                chatOpen = false
+                console.log(chatOpen)
             });
         });
     </script>

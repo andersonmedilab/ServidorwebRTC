@@ -30,16 +30,12 @@ module.exports = (function() {
                 libPath: 'lib',
                 docsPath: 'docs',
                 testPath: 'test',
-                bowerPath: 'bower_components'
+                modulesPath: 'node_modules'
             },
 
             watch: {
                 options: {
                     livereload: true,
-                },
-                bower: {
-                    files: ['bower.json'],
-                    tasks: ['bowerInstall']
                 },
                 css: {
                     files: [
@@ -55,12 +51,6 @@ module.exports = (function() {
                         '<%= config.libPath %>/**/*.js'
                     ],
                     tasks: ['jshint']
-                },
-                html: {
-                    files: [
-                        '<%= config.demosPath %>/**/*.html'
-                    ],
-                    tasks: ['htmlhint']
                 }
             },
 
@@ -108,15 +98,6 @@ module.exports = (function() {
                 }
             },
 
-            htmlhint: {
-                html1: {
-                    options: {
-                        'tag-pair': true
-                    },
-                    src: ['<%= config.demosPath %>/**/*.html']
-                }
-            },
-
             requirejs: {
                 options: {
                     // How to optimize all the JS files in the build output directory.
@@ -134,7 +115,7 @@ module.exports = (function() {
                              // Don't attempt to include dependencies whose path begins with socket.io/
                             "socket.io": "empty:",
                             // Ditto for the following 3rd-party libraries
-                            'webrtc-adapter': '<%= config.bowerPath %>/webrtc-adapter/release/adapter',
+                            'webrtc-adapter': '<%= config.modulesPath %>/webrtc-adapter/out/adapter',
                             'easyrtc_lang': '<%= config.apiPath %>/easyrtc_lang',
                             'easyrtc': '<%= config.apiPath %>/easyrtc_int',
                             'easyrtc_app': '<%= config.apiPath %>/easyrtc_app'
@@ -152,7 +133,7 @@ module.exports = (function() {
                     configure: '<%= config.docsPath %>/conf.json',
                     template: './node_modules/jsdoc-oblivion/template'
                 },
-                
+
                 client : {
                     src: [
                         '<%= config.apiPath %>/easyrtc_int.js',
@@ -176,7 +157,7 @@ module.exports = (function() {
                         destination: '<%= config.docsPath %>/server_html_docs_lite'
                     }
                 },
-                
+
                 client_lite: {
                     src: [
                         '<%= config.apiPath %>/easyrtc_int.js',
@@ -233,7 +214,7 @@ module.exports = (function() {
                 test_api: {
                     options: {
                         port: 3006,
-                        base: ['<%= config.bowerPath %>', '<%= config.apiPath %>', '<%= config.testPath %>/api']
+                        base: ['<%= config.modulesPath %>', '<%= config.apiPath %>', '<%= config.testPath %>/api']
                     }
                 }
             },
@@ -241,6 +222,10 @@ module.exports = (function() {
             karma: {
                 test_api: {
                     configFile: '<%= config.testPath %>/api/karma.conf.js'
+                },
+                headless: {
+                    configFile: '<%= config.testPath %>/api/karma.conf.js',
+                    browsers: ['ChromeHeadless'],
                 }
             },
 
@@ -251,7 +236,7 @@ module.exports = (function() {
                         '<%= config.apiPath %>/easyrtc_lang.js',
                         '<%= config.apiPath %>/easyrtc_ft.js',
                         '<%= config.apiPath %>/easyrtc_app.js',
-                        '<%= config.apiPath %>/easyrtc.js', 
+                        '<%= config.apiPath %>/easyrtc.js',
                     ],
                     options: {
                         stdout:
@@ -269,14 +254,13 @@ module.exports = (function() {
         grunt.option('force', true);
 
         grunt.loadNpmTasks('grunt-contrib-connect');
-        
+
         grunt.loadNpmTasks('grunt-contrib-watch');
         grunt.loadNpmTasks('grunt-contrib-jshint');
         grunt.loadNpmTasks('grunt-contrib-csslint');
-        grunt.loadNpmTasks('grunt-htmlhint');
 
         grunt.loadNpmTasks('grunt-karma');
-        grunt.loadNpmTasks('grunt-jsdoc');  
+        grunt.loadNpmTasks('grunt-jsdoc');
         grunt.loadNpmTasks('grunt-file-info');
         grunt.loadNpmTasks('grunt-contrib-requirejs');
 
@@ -288,10 +272,9 @@ module.exports = (function() {
         });
 
         // Code QA task(s)
-        grunt.registerTask('lint', ['csslint', 'jshint', 'htmlhint']);
+        grunt.registerTask('lint', ['csslint', 'jshint']);
         grunt.registerTask('jslint', ['jshint']);
         grunt.registerTask('csshint', ['csslint']);
-        grunt.registerTask('htmllint', ['htmlhint']);
 
         // Build task(s).
         grunt.registerTask('build', ['build_api']);
@@ -301,6 +284,7 @@ module.exports = (function() {
 
         // Test task(s).
         grunt.registerTask('test', ['test:karma']);
+        grunt.registerTask('test-headless', ['karma:headless']);
         grunt.registerTask('test:karma', ['karma:test_api']);
         grunt.registerTask('test:jasmine', ['serve:test_api']);
     };
