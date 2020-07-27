@@ -209,7 +209,7 @@ easyrtc.setAcceptChecker(function (easyrtcid, callback) {
 
     let stop = setInterval(function() {
         console.log('verificando o timeout de chegar na stream do caller antes da minha')
-        if (streamVigente !== null) {
+        if (streamVigente !== null && streamCaller !== null) {
                 console.log('vendo em que momento vai adicionar a stream a call')
                 easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
             
