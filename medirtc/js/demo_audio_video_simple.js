@@ -36,17 +36,8 @@ easyrtc.setStreamAcceptor(function (easyrtcid, stream, streamName) {
     item.style.display = 'block'
 
     if (streamName === 'default') {
-            let stop = setInterval(function() {
-                console.log('verificando o timeout de chegar na stream do caller antes da minha')
-                if (streamVigente !== null) {
-                    if (imHost) {
-                        easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
-                    }
-                    // easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
-                    easyrtc.setVideoObjectSrc(item,stream);
-                    clearInterval(stop)
-                }
-            },1000)
+        easyrtc.setVideoObjectSrc(item,stream);
+
 
     } else {
         addMediaStreamToDiv("callerVideo", stream, streamName, false);
@@ -215,6 +206,16 @@ easyrtc.setAcceptChecker(function (easyrtcid, callback) {
     console.log(easyrtcid)
     outroID = easyrtcid;
     imHost = true;
+
+    let stop = setInterval(function() {
+        console.log('verificando o timeout de chegar na stream do caller antes da minha')
+        if (streamVigente !== null) {
+                console.log('vendo em que momento vai adicionar a stream a call')
+                easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
+            
+            clearInterval(stop)
+        }
+    },3000)
 /*     if (streamVigente === null) {
         console.log('onde entra na construção da stream')
         easyrtc.setVideoSource(objetoVideo[0].deviceId);
@@ -392,6 +393,7 @@ function connect() {
                     // easyrtc.connect("easyrtc.audioVideoSimple", loginSuccess, loginFailure);
         
                     if (outroID) {
+                        console.log('vendo em qual das telas entra')
                         console.log('vendo onde entra 1')
                         easyrtc.addStreamToCall(outroID, streamVigente.streamName);
                     }
