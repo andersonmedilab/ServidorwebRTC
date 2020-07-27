@@ -30,15 +30,32 @@ easyrtc.setStreamAcceptor(function (easyrtcid, stream, streamName) {
     var mic = document.getElementById("mic");
     mic.innerHTML = '<i class="fas fa-volume-up"></i>';
 
-    addMediaStreamToDiv("callerVideo", stream, streamName, false);
+    
     var item = document.getElementById("callerVideo");
     item.style.display = 'block'
+
+    if (streamName === 'default') {
+            let stop = setInterval(function() {
+                console.log('verificando o timeout de chegar na stream do caller antes da minha')
+                if (streamVigente !== null) {
+                    easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
+                    easyrtc.setVideoObjectSrc(item,stream);
+                    clearInterval(stop)
+                }
+            },1000)
+
+    } else {
+        addMediaStreamToDiv("callerVideo", stream, streamName, false);
+    }
+
+
+
     //labelBlock.parentNode.id = "callerVideo"
 
 });
 
 easyrtc.setOnStreamClosed(function (easyrtcid, stream, streamName) {
-    // console.log('verificando quando o close stream ta sendo chamado')
+    console.log('verificando quando o close stream ta sendo chamado')
     // let verificaStreamFechada = easyrtc.getRemoteStream(outroID,streamCaller.streamName) // se for diferente de null a stream não foi fechada corretamente
     // var item = document.getElementById("callerVideo");
 
@@ -194,7 +211,7 @@ easyrtc.setAcceptChecker(function (easyrtcid, callback) {
     console.log(easyrtcid)
     outroID = easyrtcid;
 
-    if (streamVigente === null) {
+/*     if (streamVigente === null) {
         console.log('onde entra na construção da stream')
         easyrtc.setVideoSource(objetoVideo[0].deviceId);
         console.log('verificando se quando o bug ocorre cai no if')
@@ -234,7 +251,7 @@ easyrtc.setAcceptChecker(function (easyrtcid, callback) {
         
                 }
             },5000)
-    }
+    } */
     console.log('vendo como essa linha vai se comportar antes do callback')
     if (easyrtc.getConnectionCount() > 0) {
         console.log('vendo em que momento ele cai nesse if')
@@ -321,7 +338,11 @@ function connect() {
         if (objetoVideo.length === 0) {
             console.log('vendo')
             easyrtc.enableVideo(false)
+
             easyrtc.easyApp("easyrtc.audioVideoSimple", "selfVideo", ["callerVideo"], loginSuccess, loginFailure);
+
+            streamVigente = easyrtc.getLocalStream()
+            console.log(streamVigente)
             setTimeout(function (){
                 let anyError = document.querySelector('#easyrtcErrorDialog')
                 if(anyError!==null) {
@@ -340,6 +361,41 @@ function connect() {
                 callback(true, easyrtc.getLocalMediaIds());
             })
             // easyrtc.connect("easyrtc.audioVideoSimple", loginSuccess, loginFailure);
+        } else {
+
+            easyrtc.initMediaSource(
+                function (stream) {
+        
+                    streamVigente = stream
+                    console.log(stream)
+                    console.log('vendo onde entra 2')
+        
+                    var selfVideo = document.getElementById("selfVideo");
+                    easyrtc.setVideoObjectSrc(selfVideo, stream);
+        
+                    let erroResolution = document.querySelector('#easyrtcErrorDialog')
+                    if(erroResolution!==null) {
+                        erroResolution = erroResolution.querySelector('.easyrtcErrorDialog_element')
+                        if (erroResolution!==null) {
+                            if(erroResolution.innerHTML.includes("Requested video size of")) {
+                                console.log('verificando se cai aqui ')
+                                console.log(document.querySelector('#easyrtcErrorDialog'))
+                                document.querySelector('#easyrtcErrorDialog').style.display = 'none'
+                            }
+                            console.log(erroResolution)
+                        }
+                    }
+                    // easyrtc.connect("easyrtc.audioVideoSimple", loginSuccess, loginFailure);
+        
+                    if (outroID) {
+                        console.log('vendo onde entra 1')
+                        easyrtc.addStreamToCall(outroID, streamVigente.streamName);
+                    }
+                },
+                function (errCode, errText) {
+                    easyrtc.showError(errCode, errText);
+                });
+
         }
     });
     easyrtc.setUsername(validadorConexao);
@@ -389,6 +445,8 @@ function updateMicImage(toggle) {
 }
 
 function muteOutroAudio() {
+    console.log(easyrtc.getRemoteStream(outroID))
+    easyrtc.setVideoObjectSrc(document.getElementById('callerVideo'),easyrtc.getRemoteStream(outroID))
     updateFoneImage(true);
 }
 
@@ -457,7 +515,7 @@ function callEverybodyElse(roomName, occupantList, isPrimary) {
             //easyrtc.showError("ALREADY-CONNECTED", "already connected to " + easyrtc.idToName(list[position]));
         }
 
-        if (streamVigente === null) {
+/*         if (streamVigente === null) {
             console.log('verificando se sou acionado aqui sendo host 2')
             if (objetoVideo[0] !== undefined) {
                 easyrtc.setVideoSource(objetoVideo[0].deviceId);
@@ -496,7 +554,7 @@ function callEverybodyElse(roomName, occupantList, isPrimary) {
             
                     }
                 },5000)
-        }
+        } */
 
     }
 }
@@ -558,12 +616,24 @@ function vincularIdBotao() {
     };
 
     let inputEnviarMsg = document.querySelector('#menssagem')
-    inputEnviarMsg.addEventListener("change", function (event) {
+    let lastMsg;
+    inputEnviarMsg.addEventListener("input", function (event) {
         console.log('teste digitando')
         easyrtc.sendDataP2P(outroID, 'msg', true);
+        lastMsg = Date.now()
         if (inputEnviarMsg.value === '') {
             easyrtc.sendDataP2P(outroID, 'msg', false);
         }
+
+/*         setTimeout(() => {
+            console.log('testando timeout do digitando')
+            if ((Date.now() - lastMsg) > 3000) {
+                console.log('teste')
+                easyrtc.sendDataP2P(outroID, 'msg', false);
+            }
+            lastMsg = 0
+        }, 3000); */
+
     })
 
     inputEnviarMsg.addEventListener("keydown", function (event) {
@@ -622,7 +692,7 @@ function addToConversation(who, msgType, content) {
             console.log(objetoVideo)
             console.log('verificando antes do if do bug original')
             if (objetoVideo.length === 0) {
-                location.reload();
+                // location.reload();
             }
             if (streamCaller === null) {
                 console.log('verificando dentro do if do bug original')
@@ -670,15 +740,16 @@ function addToConversation(who, msgType, content) {
                 username = conexao.NOMEMEDICO
             }
         }
-
         if (typeof content === 'boolean') {
             let chatEnviando = document.querySelector('#isTexting')
             if (content) {
+                
                 chatEnviando.style.display = 'block'
                 chatEnviando.innerHTML = `${username} está digitando...`
-                setTimeout(function(){
+
+                setTimeout(() => {
                     chatEnviando.style.display = 'none'
-                },1000) 
+                }, 2000);
             } else {
                 chatEnviando.style.display = 'none'
             }
@@ -715,7 +786,6 @@ function addToConversation(who, msgType, content) {
         if (chatOpen) {
             scrollBottom()
         }
-
     }
 
 }
