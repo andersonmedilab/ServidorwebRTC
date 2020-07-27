@@ -13,6 +13,7 @@ let streamCaller = null; // stream do callerVideo
 let objetoVideo; // objeto que contem os devices capturados do usuário
 var fileSender = null; // variavel que constroi a função de enviar arquivos(vinculada ao easyrtid do outro usuario)
 let somaMsgRcebida = 0;
+let imHost = false
 
 function scrollBottom(){
     let objDiv = document.getElementById("conversation");
@@ -38,7 +39,10 @@ easyrtc.setStreamAcceptor(function (easyrtcid, stream, streamName) {
             let stop = setInterval(function() {
                 console.log('verificando o timeout de chegar na stream do caller antes da minha')
                 if (streamVigente !== null) {
-                    easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
+                    if (imHost) {
+                        easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
+                    }
+                    // easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
                     easyrtc.setVideoObjectSrc(item,stream);
                     clearInterval(stop)
                 }
@@ -210,7 +214,7 @@ easyrtc.setAcceptChecker(function (easyrtcid, callback) {
     console.log('vendo onde entra a função que é chamada na tela do vegetal quando o animal entra')
     console.log(easyrtcid)
     outroID = easyrtcid;
-
+    imHost = true;
 /*     if (streamVigente === null) {
         console.log('onde entra na construção da stream')
         easyrtc.setVideoSource(objetoVideo[0].deviceId);
