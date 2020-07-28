@@ -211,7 +211,7 @@ easyrtc.setAcceptChecker(function (easyrtcid, callback) {
         console.log('verificando o timeout de chegar na stream do caller antes da minha')
         if (streamVigente !== null && streamCaller !== null) {
                 console.log('vendo em que momento vai adicionar a stream a call')
-                // easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
+                easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
             
             clearInterval(stop)
         }
@@ -521,7 +521,7 @@ function callEverybodyElse(roomName, occupantList, isPrimary) {
             //easyrtc.showError("ALREADY-CONNECTED", "already connected to " + easyrtc.idToName(list[position]));
         }
 
-        // easyrtc.addStreamToCall(otherID, streamVigente.streamName);
+        easyrtc.addStreamToCall(otherID, streamVigente.streamName);
 
 /*         if (streamVigente === null) {
             console.log('verificando se sou acionado aqui sendo host 2')
@@ -716,7 +716,7 @@ function addToConversation(who, msgType, content) {
                             streamVigente = stream
                             createLocalVideo(stream, 'padrao');
 
-                            // easyrtc.addStreamToCall(outroID, 'padrao');
+                            easyrtc.addStreamToCall(outroID, 'padrao');
 
                         },
                         function (errCode, errText) {
