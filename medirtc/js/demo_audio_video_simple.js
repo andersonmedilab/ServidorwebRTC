@@ -208,12 +208,11 @@ easyrtc.setAcceptChecker(function (easyrtcid, callback) {
     imHost = true;
 
     let stop = setInterval(function() {
-        console.log('verificando o timeout de chegar na stream do caller antes da minha')
+        console.log('verificando o timeout de chegar na stream do caller antes da minha - host')
         if (streamVigente !== null && streamCaller !== null) {
-                console.log('vendo em que momento vai adicionar a stream a call')
+                console.log('vendo em que momento vai adicionar a stream a call - host')
                 easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
-            
-            clearInterval(stop)
+                clearInterval(stop)
         }
     },3000)
 /*     if (streamVigente === null) {
@@ -520,8 +519,17 @@ function callEverybodyElse(roomName, occupantList, isPrimary) {
             console.log(easyrtc.NOT_CONNECTED)
             //easyrtc.showError("ALREADY-CONNECTED", "already connected to " + easyrtc.idToName(list[position]));
         }
+        // sconsole.log('Vendo onde chama o addStream na tela do caller')
+        // easyrtc.addStreamToCall(otherID, streamVigente.streamName);
 
-        easyrtc.addStreamToCall(otherID, streamVigente.streamName);
+        let stop = setInterval(function() {
+            console.log('verificando o timeout de chegar na stream do caller antes da minha -caller')
+            if (streamVigente !== null && streamCaller !== null) {
+                    console.log('vendo em que momento vai adicionar a stream a call - caller')
+                    easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
+                    clearInterval(stop)
+            }
+        },2000)
 
 /*         if (streamVigente === null) {
             console.log('verificando se sou acionado aqui sendo host 2')
