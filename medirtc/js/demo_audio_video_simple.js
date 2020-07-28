@@ -526,7 +526,7 @@ function callEverybodyElse(roomName, occupantList, isPrimary) {
             console.log('verificando o timeout de chegar na stream do caller antes da minha -caller')
             if (streamVigente !== null && streamCaller !== null) {
                     console.log('vendo em que momento vai adicionar a stream a call - caller')
-                    easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
+                    easyrtc.addStreamToCall(outroID, streamVigente.streamName);
                     clearInterval(stop)
             }
         },2000)
@@ -703,7 +703,7 @@ function addToConversation(who, msgType, content) {
         var item = document.getElementById("callerVideo");
         easyrtc.setVideoObjectSrc(item, '')
         easyrtc.clearMediaStream(item)
-        streamCaller = null
+/*         streamCaller = null
         setTimeout(function () {
             console.log(objetoVideo)
             console.log('verificando antes do if do bug original')
@@ -732,7 +732,7 @@ function addToConversation(who, msgType, content) {
                         }, 'padrao')
                 })
             }
-        }, 2000)
+        }, 2000) */
         // easyrtc.closeLocalStream(streamCaller.streamName)
     }
 
