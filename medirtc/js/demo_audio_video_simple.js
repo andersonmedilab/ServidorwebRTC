@@ -211,7 +211,7 @@ easyrtc.setAcceptChecker(function (easyrtcid, callback) {
         console.log('verificando o timeout de chegar na stream do caller antes da minha')
         if (streamVigente !== null && streamCaller !== null) {
                 console.log('vendo em que momento vai adicionar a stream a call')
-                easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
+                // easyrtc.addStreamToCall(easyrtcid, streamVigente.streamName);
             
             clearInterval(stop)
         }
@@ -326,7 +326,7 @@ function connect() {
     easyrtc.setPeerListener(addToConversation);
     easyrtc.setVideoDims(640, 480);
     // easyrtc.easyApp("easyrtc.audioVideoSimple", "selfVideo", ["callerVideo"], loginSuccess, loginFailure);
-    easyrtc.connect("easyrtc.audioVideoSimple", loginSuccess, loginFailure);
+    // easyrtc.connect("easyrtc.audioVideoSimple", loginSuccess, loginFailure);
     easyrtc.setRoomOccupantListener(callEverybodyElse);
     easyrtc.setAutoInitUserMedia(false);
 
@@ -390,12 +390,12 @@ function connect() {
                             console.log(erroResolution)
                         }
                     }
-                    // easyrtc.connect("easyrtc.audioVideoSimple", loginSuccess, loginFailure);
+                    easyrtc.connect("easyrtc.audioVideoSimple", loginSuccess, loginFailure);
         
                     if (outroID) {
                         console.log('vendo em qual das telas entra')
                         console.log('vendo onde entra 1')
-                        easyrtc.addStreamToCall(outroID, streamVigente.streamName);
+                        // easyrtc.addStreamToCall(outroID, streamVigente.streamName);
                     }
                 },
                 function (errCode, errText) {
@@ -452,7 +452,7 @@ function updateMicImage(toggle) {
 
 function muteOutroAudio() {
     console.log(easyrtc.getRemoteStream(outroID))
-    easyrtc.setVideoObjectSrc(document.getElementById('callerVideo'),easyrtc.getRemoteStream(outroID))
+    // easyrtc.setVideoObjectSrc(document.getElementById('callerVideo'),easyrtc.getRemoteStream(outroID))
     updateFoneImage(true);
 }
 
@@ -520,6 +520,8 @@ function callEverybodyElse(roomName, occupantList, isPrimary) {
             console.log(easyrtc.NOT_CONNECTED)
             //easyrtc.showError("ALREADY-CONNECTED", "already connected to " + easyrtc.idToName(list[position]));
         }
+
+        // easyrtc.addStreamToCall(otherID, streamVigente.streamName);
 
 /*         if (streamVigente === null) {
             console.log('verificando se sou acionado aqui sendo host 2')
@@ -714,7 +716,7 @@ function addToConversation(who, msgType, content) {
                             streamVigente = stream
                             createLocalVideo(stream, 'padrao');
 
-                            easyrtc.addStreamToCall(outroID, 'padrao');
+                            // easyrtc.addStreamToCall(outroID, 'padrao');
 
                         },
                         function (errCode, errText) {

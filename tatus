@@ -1,0 +1,174 @@
+[33mcommit 406e1724ffeaaa649ae57bc009033e6d8befc7bf[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Mon Jul 27 20:10:47 2020 -0300
+
+    v3.5.1 - Detalhe faltando no commit da correção do bug
+
+[33mcommit c5a1bf5a78c5cb54d0956380ce572be7740e2cd3[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Mon Jul 27 20:01:36 2020 -0300
+
+    v3.5- Nova correção do bug do video
+
+[33mcommit abc223404c1fc7067b1b75e5286eac0228c72cf7[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Mon Jul 27 18:50:12 2020 -0300
+
+    v3.4 - Correção bug do video
+
+[33mcommit e04c83d7d4a9751719d4c8d538b669623970344e[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Mon Jul 27 15:12:17 2020 -0300
+
+    v3.3 - Modificação na construção do video para correção do bug de troca de cameras
+
+[33mcommit 6ac2dfa2effb3f6d6a525d4a0793f9c6932a9253[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Fri Jul 24 16:15:35 2020 -0300
+
+    v3.2 - Notificação no chat, scroll acompanhando está digitando e troca de câmeras
+
+[33mcommit e42f17493499dcfeb14d460d663874839cb25dfd[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Fri Jul 10 11:55:01 2020 -0300
+
+    v3.1 - Ajuste de layout responsivo IPAD
+
+[33mcommit 70f4d8e86f3959844c47eb7729c9a3f324743e58[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Fri Jul 10 10:35:24 2020 -0300
+
+    3.0 - Ajuste na condição do PiP
+
+[33mcommit 20685e6e2aa7c876d128971cb1aa2eb8e4499ac2[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Fri Jul 10 10:28:42 2020 -0300
+
+    v2.9 - Modificação página de erro, implementação do PIP, direcionamento sala de espera por URL
+
+[33mcommit 2a65a59ab34f35ba23916bae3767dbdcdb9de0d9[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Fri Jul 3 11:07:47 2020 -0300
+
+    v2.8 - Acerto de layout, correção do bug de não enviar mensagem no chat em alguns casos (refresh automatico)
+
+[33mcommit 858e6d86195be20a95298661f5cf48b85b801cb9[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Thu Jul 2 16:15:02 2020 -0300
+
+    v2.7 - Acerto do layout,correção do botão enviar, troca do icone, acerto no JS caso não tenha url criptografada
+
+[33mcommit 30701925bc693e6ca912237e6bc8c3f2d01a884d[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Tue Jun 30 10:12:35 2020 -0300
+
+    v2.6 - Acerto do bug do botão de enviar
+
+[33mcommit 97cb9c52b0cc3789d0ff973ddc5d8bd686b31722[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Mon Jun 29 15:26:11 2020 -0300
+
+    Atualização dos direcionamentos a pagina do mediAgenda
+
+[33mcommit 844f922609ff3ceeeb7b6269c3b7da55ca6c09cb[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Mon Jun 29 13:26:24 2020 -0300
+
+    v2.4 - Mudança do botão enviar do chat, alterações no layout, adaptação para receber URL de direcionamento ao agenda
+
+[33mcommit cb43b29a73b6634444d3e5d1ee11a134593cd8fb[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Wed Jun 24 12:56:29 2020 -0300
+
+    v2.3 - Correção do bug de ocultar os botões no mobile
+
+[33mcommit 6271529473a725b3a7e363e495df42fdbeeb9acd[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Tue Jun 23 20:50:20 2020 -0300
+
+    v2.2-Ajuste do bug do carregamento de download
+
+[33mcommit a6a67519957be70740711f33f60ece7537331daf[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Tue Jun 23 18:35:57 2020 -0300
+
+    v2.1 - Chat e fileTrasnfer para testes
+
+[33mcommit ecbfe7390eeb42a07bda6d28ba89e98ff141d57d[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Tue Jun 23 17:50:08 2020 -0300
+
+    v2.0 - Chat file e fileTransfer
+
+[33mcommit ccbe4a6659910e03a48ab0dd94a6ca77c447cd3c[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Mon May 4 11:02:36 2020 -0300
+
+    v1.9 - Recebimento com sucesso dos dados do backend
+
+[33mcommit 15a14398b904ff8ec5c70767d9c15eaa072e1e08[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Tue Apr 28 14:42:16 2020 -0300
+
+    v1.8 - Implementação de sala de espera,timeout em milisegundos, exclusão do botão chat,mudança do nome da pasta demos
+
+[33mcommit 0dda6da1851ae6e7ac5554810d5d64ad42a1ca9e[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Fri Apr 17 15:01:49 2020 -0300
+
+    v1.7 - Resolvido bug da camera 2
+
+[33mcommit c63a49967d7859b39fed327f48d69d54582d7a3f[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Fri Apr 17 12:07:10 2020 -0300
+
+    V1.6 - Resolvendo bug da camera sumindo
+
+[33mcommit 15882e112714c946939c4e2c53d4a87e70501fcb[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Fri Apr 17 11:45:46 2020 -0300
+
+    1.5 - Permitir usuário sem webcam na call
+
+[33mcommit 6386708dce1997c98e8e843b6f511ac8a5c6c60b[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Wed Apr 15 10:27:33 2020 -0300
+
+    V1.4 - Alteração do layout
+
+[33mcommit b3dd26ef5da13f5b7bb1370e545fd7cd7c0827be[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Tue Apr 14 09:23:01 2020 -0300
+
+    v1.3 - Botão mute microfone e video
+
+[33mcommit 486ec748d381b1a478c38998d15307a83476aa3e[m
+Merge: 8cc6bb6 8399c34
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Mon Apr 13 14:58:15 2020 -0300
+
+    Merge branch 'master' of https://github.com/andersonmedilab/ServidorwebRTC
+
+[33mcommit 8cc6bb63d7938ea6e01defd38423b648dc7d8829[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Mon Apr 13 14:55:46 2020 -0300
+
+    V1.2 - Data como parametro na URL,invalidação do link, botões mute e logout
+
+[33mcommit 8399c34f7d15e593e47a7e6f05efc39d901e5117[m
+Author: andersonmedilab <63257006+andersonmedilab@users.noreply.github.com>
+Date:   Wed Apr 8 11:44:13 2020 -0300
+
+    att
+
+[33mcommit c9488f2715285958bb5bdec158cf3c8c5f3a983e[m
+Author: Anderson <anderson.silva@medilabsistemas.com.br>
+Date:   Wed Apr 8 11:39:13 2020 -0300
+
+    v1.1 - Implementação de timeout e tela de erro
+
+[33mcommit 8b0b4f8595676ba6fda642c08e268a49f759ea81[m
+Author: andersonmedilab <63257006+andersonmedilab@users.noreply.github.com>
+Date:   Wed Apr 8 11:24:35 2020 -0300
+
+    Initial commit
