@@ -51,6 +51,27 @@ easyrtc.setStreamAcceptor(function (easyrtcid, stream, streamName) {
 
 easyrtc.setOnStreamClosed(function (easyrtcid, stream, streamName) {
     console.log('verificando quando o close stream ta sendo chamado')
+
+    let ocultaButton = document.querySelector('#trocarCamera')
+    let modalButton = document.querySelectorAll('#cameraModal')
+    ocultaButton.setAttribute("disabled", "disabled");
+    ocultaButton.style.opacity = 0.3
+    for (let i = 0; i < modalButton.length; i++) {
+        modalButton[i].setAttribute("disabled", "disabled");
+        modalButton[i].style.opacity = 0.3
+    }
+    setTimeout(() => {
+        console.log('teste botão voltando a ser habilitado')
+        ocultaButton.removeAttribute("disabled", "disabled");
+        ocultaButton.style.opacity = 1
+        for (let i = 0; i < modalButton.length; i++) {
+            modalButton[i].removeAttribute("disabled", "disabled");
+            modalButton[i].style.opacity = 1
+        }
+    }, 5000);
+
+
+
     // let verificaStreamFechada = easyrtc.getRemoteStream(outroID,streamCaller.streamName) // se for diferente de null a stream não foi fechada corretamente
     // var item = document.getElementById("callerVideo");
 
@@ -129,6 +150,7 @@ var localStreamCount = 0;
 function addSrcButton(buttonLabel, videoId) {
     console.log(videoId)
     var button = createLabelledButton(buttonLabel);
+    button.id = 'cameraModal'
 
 
     var streamName1 = buttonLabel + "_" + localStreamCount;
@@ -136,6 +158,14 @@ function addSrcButton(buttonLabel, videoId) {
 
 
     button.onclick = function () {
+        let ocultaButton = document.querySelector('#trocarCamera')
+        ocultaButton.setAttribute("disabled", "disabled");
+        ocultaButton.style.opacity = 0.3
+        setTimeout(() => {
+            console.log('teste botão voltando a ser habilitado')
+            ocultaButton.removeAttribute("disabled", "disabled");
+            ocultaButton.style.opacity = 1
+        }, 5000);
         var streamName = buttonLabel + "_" + localStreamCount;
         localStreamCount++;
         console.log(streamName)
@@ -180,7 +210,7 @@ function createLabelledButton(buttonLabel) {
     var button = document.createElement("button");
     button.appendChild(document.createTextNode(buttonLabel));
     document.getElementById("testeScreen").appendChild(button);
-    // button.appendChild(document.createElement("hr")); // rodrigo
+    button.appendChild(document.createElement("hr")); // rodrigo
     return button;
 }
 
