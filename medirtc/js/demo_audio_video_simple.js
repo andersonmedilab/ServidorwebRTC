@@ -1,5 +1,5 @@
 var selfEasyrtcid = "";
-let outroID; // easyrtcid do outro usuário só que é obtido em dois momentos: durante a call em callEverybodyElse a ou no setAcceptChecker pro host
+let outroID = null; // easyrtcid do outro usuário só que é obtido em dois momentos: durante a call em callEverybodyElse a ou no setAcceptChecker pro host
 var conexao = {}; // parametros da url no formato de objeto
 var chaveValor; // parametros da url em array
 var channelIsActive = {};
@@ -13,11 +13,38 @@ let streamCaller = null; // stream do callerVideo
 let objetoVideo; // objeto que contem os devices capturados do usuário
 var fileSender = null; // variavel que constroi a função de enviar arquivos(vinculada ao easyrtid do outro usuario)
 let somaMsgRcebida = 0;
-let imHost = false
+let lastMsg;
 
 function scrollBottom(){
     let objDiv = document.getElementById("conversation");
     objDiv.scrollTop = objDiv.scrollHeight;
+}
+
+let booleanModalCamera = false
+function blockModalOpen() {
+    console.log('teste')
+    let msgOpenModal
+    if(!booleanModalCamera) {
+        if (outroID) {
+            booleanModalCamera = true
+            msgOpenModal = 'outro usuario com modal aberto'
+            msgOpenModal = btoa(msgOpenModal)
+            console.log(msgOpenModal)
+            console.log(atob(msgOpenModal))
+            easyrtc.sendDataP2P(outroID, 'msg', msgOpenModal);
+        }
+    } else {
+        if(outroID) {
+            msgOpenModal = 'outro usuario com modal fechado'
+            msgOpenModal = btoa(msgOpenModal)
+            console.log(msgOpenModal)
+            console.log(atob(msgOpenModal))
+            booleanModalCamera = false
+            easyrtc.sendDataP2P(outroID, 'msg', msgOpenModal);
+        }
+    }
+
+    console.log(booleanModalCamera)
 }
 
 // Inicio das funções para construção do video e troca de camera 
@@ -221,6 +248,7 @@ easyrtc.setPeerClosedListener(function (easyrtcid) {
     console.log('entra plz')
     console.log(easyrtcid)
     fileSender = null;
+    outroID = null
 
     setTimeout(function (){
         let anyError = document.querySelector('#easyrtcErrorDialog')
@@ -235,7 +263,6 @@ easyrtc.setAcceptChecker(function (easyrtcid, callback) {
     console.log('vendo onde entra a função que é chamada na tela do vegetal quando o animal entra')
     console.log(easyrtcid)
     outroID = easyrtcid;
-    imHost = true;
 
     let stop = setInterval(function() {
         console.log('verificando o timeout de chegar na stream do caller antes da minha - host')
@@ -648,6 +675,20 @@ function vincularIdBotao() {
 
     console.log(easyrtc)
 
+    let stopInterval = setInterval(() => {
+        console.log('testando interval do digitando')
+        if ((Date.now() - lastMsg) > 3000) {
+            console.log('teste')
+            let chatEnviando = document.querySelector('#isTexting')
+            chatEnviando.style.display = 'none'
+            // easyrtc.sendDataP2P(outroID, 'msg', false);
+        }
+        lastMsg = 0
+        if(!chatOpen) {
+            clearInterval(stopInterval)
+        }
+    }, 2000);
+
     let buttonMsg = document.getElementById('enviar_menssagem');
     buttonMsg.onclick = function () {
         easyrtc.sendDataP2P(outroID, 'msg', false);
@@ -662,11 +703,10 @@ function vincularIdBotao() {
     };
 
     let inputEnviarMsg = document.querySelector('#menssagem')
-    let lastMsg;
     inputEnviarMsg.addEventListener("input", function (event) {
         console.log('teste digitando')
         easyrtc.sendDataP2P(outroID, 'msg', true);
-        lastMsg = Date.now()
+        // lastMsg = Date.now()
         if (inputEnviarMsg.value === '') {
             easyrtc.sendDataP2P(outroID, 'msg', false);
         }
@@ -792,41 +832,63 @@ function addToConversation(who, msgType, content) {
                 
                 chatEnviando.style.display = 'block'
                 chatEnviando.innerHTML = `${username} está digitando...`
-
-                setTimeout(() => {
+                lastMsg = Date.now()
+/*                 setTimeout(() => {
                     chatEnviando.style.display = 'none'
-                }, 2000);
+                }, 2000); */
+
             } else {
                 chatEnviando.style.display = 'none'
             }
         } else {
-            content = content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-            content = content.replace(/\n/g, '<br />');
-            var divCaixaMsg = document.getElementById('conversation')
-            var divMsgEnviada = document.createElement("div")
-            divMsgEnviada.className = "textoBox"
-            divCaixaMsg.appendChild(divMsgEnviada)
-            divMsgEnviada.innerHTML +=
-                "<b>" + username + "<span class = 'horaChat'>" + pegarDataAtual() + ":" + "</span>" + "</b>" + "<br>" + content;
-            divMsgEnviada.id = who
-            if (divMsgEnviada.id === 'Eu') {
-                divMsgEnviada.style.backgroundColor = "#2066a2"
-                divMsgEnviada.querySelector('b').style.color = "#e7e7e7"
-                divMsgEnviada.querySelector('span').style.color = "#392626"
-                // teste2.style.textAlign = "right"
-                // teste2.querySelector('.textMsg').style.textAlign = "right"
-                // "<p class='textMsg'>"+
-            } else {
-                if (!chatOpen) {
-                    somaMsgRcebida+=1
-                    let contadorMsg = document.querySelector('#contadorMsg')
-                    contadorMsg.innerHTML = somaMsgRcebida
-                    document.querySelector('#contadorMsg').style.display = 'block'
+            if (content === 'b3V0cm8gdXN1YXJpbyBjb20gbW9kYWwgYWJlcnRv' || content === 'b3V0cm8gdXN1YXJpbyBjb20gbW9kYWwgZmVjaGFkbw==') {
+                let ocultaButton = document.querySelector('#trocarCamera')
+                let modalButton = document.querySelectorAll('#cameraModal')
+                if(content === 'b3V0cm8gdXN1YXJpbyBjb20gbW9kYWwgYWJlcnRv') {
+                    ocultaButton.setAttribute("disabled", "disabled");
+                    ocultaButton.style.opacity = 0.3
+                    for (let i = 0; i < modalButton.length; i++) {
+                        modalButton[i].setAttribute("disabled", "disabled");
+                        modalButton[i].style.opacity = 0.3
+                    }
                 } else {
-                    document.querySelector('#contadorMsg').style.display = 'none'
+                    console.log('teste botão voltando a ser habilitado')
+                    ocultaButton.removeAttribute("disabled", "disabled");
+                    ocultaButton.style.opacity = 1
+                    for (let i = 0; i < modalButton.length; i++) {
+                        modalButton[i].removeAttribute("disabled", "disabled");
+                        modalButton[i].style.opacity = 1
+                    }
                 }
-                divMsgEnviada.style.backgroundColor = "#e7e7e7"
-                divMsgEnviada.style.color = "#000"
+            } else {
+                content = content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                content = content.replace(/\n/g, '<br />');
+                var divCaixaMsg = document.getElementById('conversation')
+                var divMsgEnviada = document.createElement("div")
+                divMsgEnviada.className = "textoBox"
+                divCaixaMsg.appendChild(divMsgEnviada)
+                divMsgEnviada.innerHTML +=
+                    "<b>" + username + "<span class = 'horaChat'>" + pegarDataAtual() + ":" + "</span>" + "</b>" + "<br>" + content;
+                divMsgEnviada.id = who
+                if (divMsgEnviada.id === 'Eu') {
+                    divMsgEnviada.style.backgroundColor = "#2066a2"
+                    divMsgEnviada.querySelector('b').style.color = "#e7e7e7"
+                    divMsgEnviada.querySelector('span').style.color = "#392626"
+                    // teste2.style.textAlign = "right"
+                    // teste2.querySelector('.textMsg').style.textAlign = "right"
+                    // "<p class='textMsg'>"+
+                } else {
+                    if (!chatOpen) {
+                        somaMsgRcebida+=1
+                        let contadorMsg = document.querySelector('#contadorMsg')
+                        contadorMsg.innerHTML = somaMsgRcebida
+                        document.querySelector('#contadorMsg').style.display = 'block'
+                    } else {
+                        document.querySelector('#contadorMsg').style.display = 'none'
+                    }
+                    divMsgEnviada.style.backgroundColor = "#e7e7e7"
+                    divMsgEnviada.style.color = "#000"
+                }
             }
         }
         if (chatOpen) {
@@ -1288,7 +1350,6 @@ function detectBrowser() {
         pip.style.display = 'none'
         return 'Edge'
     } else if (isSafari) {
-        pip.style.display = 'none'
         return 'Safari'
     } else if (isIE) {
         pip.style.display = 'none'
@@ -1305,7 +1366,7 @@ function detectBrowser() {
 
 async function videoFlutuante() {
     console.log('teste se entra pip 1')
-    if (detectBrowser() === 'Opera' || detectBrowser() === 'Chrome' || detectBrowser() === 'EdgeChromium') {
+    if (detectBrowser() === 'Opera' || detectBrowser() === 'Chrome' || detectBrowser() === 'EdgeChromium' || detectBrowser() === 'Safari') {
         console.log('se entra no if detect browser')
         const video = document.querySelector('#callerVideo');
         await video.requestPictureInPicture();
