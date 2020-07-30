@@ -24,6 +24,7 @@ let booleanModalCamera = false
 function blockModalOpen() {
     console.log('teste')
     let msgOpenModal
+    let onModalClosed =  document.querySelector('body')
     if(!booleanModalCamera) {
         if (outroID) {
             booleanModalCamera = true
@@ -32,6 +33,23 @@ function blockModalOpen() {
             console.log(msgOpenModal)
             console.log(atob(msgOpenModal))
             easyrtc.sendDataP2P(outroID, 'msg', msgOpenModal);
+
+            listener = function(){
+                console.log('teste click body')
+                msgOpenModal = 'outro usuario com modal fechado'
+                msgOpenModal = btoa(msgOpenModal)
+                console.log(msgOpenModal)
+                console.log(atob(msgOpenModal))
+                booleanModalCamera = false
+                onModalClosed.removeEventListener('click', listener);
+                easyrtc.sendDataP2P(outroID, 'msg', msgOpenModal);
+            }
+            
+            
+            setTimeout(function() {
+                onModalClosed.addEventListener('click', listener)
+            }, 500)
+
         }
     } else {
         if(outroID) {
@@ -40,6 +58,7 @@ function blockModalOpen() {
             console.log(msgOpenModal)
             console.log(atob(msgOpenModal))
             booleanModalCamera = false
+            onModalClosed.removeEventListener('click', listener);
             easyrtc.sendDataP2P(outroID, 'msg', msgOpenModal);
         }
     }
@@ -55,8 +74,8 @@ easyrtc.setStreamAcceptor(function (easyrtcid, stream, streamName) {
     console.log(stream)
     streamCaller = stream
 
-    var mic = document.getElementById("mic");
-    mic.innerHTML = '<i class="fas fa-volume-up"></i>';
+/*     var mic = document.getElementById("mic");
+    mic.innerHTML = '<i class="fas fa-volume-up"></i>'; */
 
     
     var item = document.getElementById("callerVideo");
@@ -70,7 +89,9 @@ easyrtc.setStreamAcceptor(function (easyrtcid, stream, streamName) {
         addMediaStreamToDiv("callerVideo", stream, streamName, false);
     }
 
-
+    if(mutarOutroAudio) {
+        item.muted = mutarOutroAudio
+    }
 
     //labelBlock.parentNode.id = "callerVideo"
 
@@ -505,7 +526,7 @@ function updateMicImage(toggle) {
         microphone.innerHTML = '<i class="fas fa-microphone-alt"></i>'
     }
 }
-
+let mutarOutroAudio = false
 function muteOutroAudio() {
     console.log(easyrtc.getRemoteStream(outroID))
     // easyrtc.setVideoObjectSrc(document.getElementById('callerVideo'),easyrtc.getRemoteStream(outroID))
@@ -521,6 +542,8 @@ function updateFoneImage(toggle) {
     if (toggle) {
         isMuted = !isMuted;
         videoObject.muted = isMuted;
+        mutarOutroAudio = isMuted
+        console.log(mutarOutroAudio)
     }
     mic.innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
     /*     }
@@ -985,7 +1008,18 @@ function acceptRejectCB(otherGuy, fileNameList, wasAccepted) {
     }
 
     for (var i = 0; i < fileNameList.length; i++) {
-        receiveBlock.innerHTML = "<b>" + username + "</b>" + "<span class = 'horaChat'>" + pegarDataAtual() + ":" + "</span>" + "<br>" + fileNameList[i].name + "(" + fileNameList[i].size + " bytes)"
+
+        let kbOrMb;
+        if( Math.trunc(fileNameList[i].size / (1024 * 1024) ) === 0 ) {
+            kbOrMb = fileNameList[i].size / (1024)
+            
+            kbOrMb = "(" + parseFloat(kbOrMb.toFixed(2)) + " Kb)" 
+        } else {
+            kbOrMb = fileNameList[i].size / (1024 *1024)
+            kbOrMb = "(" + parseFloat(kbOrMb.toFixed(2)) + " Mb)" 
+        }
+
+        receiveBlock.innerHTML = "<b>" + username + "</b>" + "<span class = 'horaChat'>" + pegarDataAtual() + ":" + "</span>" + "<br>" + fileNameList[i].name + kbOrMb
     }
 
     //
@@ -1113,10 +1147,17 @@ function updateStatusDiv(state, verificador) {
                 username = conexao.NOMEPACIENTE
             }
             console.log(username)
-
-            for (var i = 0; i < mandarAceito.length; i++) {
-
-                emissor.innerHTML = "<b>" + username + "</b>" + "<span class = 'horaChat'>" + pegarDataAtual() + ":" + "</span>" + "<br>" + mandarAceito[i].name + "(" + mandarAceito[i].size + " bytes)"
+            for (var i = 0; i < mandarAceito.length; i++) {  
+                let kbOrMb;
+                if( Math.trunc(mandarAceito[i].size / (1024 * 1024) ) === 0 ) {
+                    kbOrMb = mandarAceito[i].size / (1024)
+                    
+                    kbOrMb = "(" + parseFloat(kbOrMb.toFixed(2)) + " Kb)" 
+                } else {
+                    kbOrMb = mandarAceito[i].size / (1024 *1024)
+                    kbOrMb = "(" + parseFloat(kbOrMb.toFixed(2)) + " Mb)" 
+                }
+                emissor.innerHTML = "<b>" + username + "</b>" + "<span class = 'horaChat'>" + pegarDataAtual() + ":" + "</span>" + "<br>" + mandarAceito[i].name + kbOrMb
             }
             //
             // provide accept/reject buttons
